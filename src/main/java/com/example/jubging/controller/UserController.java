@@ -1,8 +1,21 @@
 package com.example.jubging.controller;
 
-import org.springframework.stereotype.Controller;
+import com.example.jubging.model.dto.UserDTO;
+import com.example.jubging.service.UserService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
+@RequiredArgsConstructor
+@RequestMapping("/api/user")
 public class UserController {
 
+    private final UserService userService;
+
+    @PostMapping("/register")
+    public ResponseEntity register(@RequestBody UserDTO userDTO) {
+        this.userService.register(userDTO);
+        return ResponseEntity.ok().build();
+    }
 }
