@@ -10,16 +10,16 @@
 #spring.jpa.hibernate.ddl-auto=update
 #
 
-logging:
-  level:
-    root: warn
-    com.restApi.restApiSpringBootApp: info
-  file:
-    path: /home/ec2-user/api/log
+#logging:
+#  level:
+#    root: warn
+#    com.restApi.restApiSpringBootApp: info
+#  file:
+#    path: /home/ec2-user/api/log
 
-  logback:
-    rollingpolicy:
-      max-history: 7
+#  logback:
+#    rollingpolicy:
+#      max-history: 7
 
 server:
   port: 8080
@@ -36,10 +36,10 @@ spring:
 #      hbm2ddl.auto: none
       format_sql: true
     generate-ddl: true
-    show-sql: true
+    show-sql: false
     open-in-view: false
     hibernate:
-      ddl-auto: validate
+      ddl-auto: create
   url:
     base: "deployServerBaseUrl"
   profiles:

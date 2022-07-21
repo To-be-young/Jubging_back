@@ -1,5 +1,6 @@
 package com.example.jubging.advice.exception;
 
+// 로그인 예외처리
 public class CEmailLoginFailedException extends RuntimeException {
     public CEmailLoginFailedException() {
         super();

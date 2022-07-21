@@ -6,6 +6,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.Collections;
 
@@ -29,11 +30,11 @@ public class UserDTO {
     private Gender gender;
 
 
-    public User toEntity(){
+    public User toEntity(PasswordEncoder passwordEncoder){
         return User.builder()
                 .id(id)
                 .name(name)
-                .password(password)
+                .password(passwordEncoder.encode(password))
                 .userId(userId)
                 .phoneNumber(phoneNumber)
                 .age(age)

@@ -17,7 +17,6 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@ToString
 @Table(name = "user")
 public class User implements UserDetails {
     @Id
@@ -95,7 +94,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return false;
     }
-
 
     // TODO
     // 토큰

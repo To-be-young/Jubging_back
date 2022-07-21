@@ -37,7 +37,8 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
         log.info("[Verifing token]");
         log.info(((HttpServletRequest) request).getRequestURL().toString());
 
-        if (token != null && jwtTokenProvider.validateToken(token)) {
+        if (token != null && jwtTokenProvider.validateToken(token) == true) {
+            log.info("[토큰 유효성 확인]");
             // validateToken : Jwt 토큰의 유효성 + 만료일자 확인
             Authentication auth = jwtTokenProvider.getAuthentication(token);
             // getAuthentication : Jwt 토큰으로 인증 정보 조회
