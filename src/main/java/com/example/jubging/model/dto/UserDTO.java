@@ -7,6 +7,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.Collections;
+
 @Data
 @Builder
 @AllArgsConstructor
@@ -26,6 +28,7 @@ public class UserDTO {
 
     private Gender gender;
 
+
     public User toEntity(){
         return User.builder()
                 .id(id)
@@ -35,6 +38,7 @@ public class UserDTO {
                 .phoneNumber(phoneNumber)
                 .age(age)
                 .gender(gender)
+                .roles(Collections.singletonList("ROLE_USER"))
                 .build();
     }
 
