@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Builder
 @Entity
@@ -23,7 +24,7 @@ public class PloggingRecords {
     private String userId;
 
     @Column(name = "date", nullable = false)
-    private String date;
+    private LocalDateTime date;
 
     @Column(name = "distance", nullable = false)
     private Double distance;

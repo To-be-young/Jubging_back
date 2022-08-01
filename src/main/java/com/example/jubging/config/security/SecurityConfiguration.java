@@ -34,7 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers(HttpMethod.POST, "/*/*/login", "/*/*/signup","/*/finish").permitAll()
+                .antMatchers(HttpMethod.POST, "/*/*/login", "/*/*/signup","/*/*/finish").permitAll()
                 .anyRequest().hasRole("USER")
 
                 // jwt 인증 필터를 UsernamePasswordAuthenticationFilter.class 전에 넣는다.

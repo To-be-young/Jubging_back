@@ -15,14 +15,14 @@ import org.springframework.web.bind.annotation.RestController;
 @Slf4j
 @RequiredArgsConstructor
 @RestController
-@RequestMapping("/api/finish")
+@RequestMapping("/api/plogging")
 public class PloggingFinishController {
     private final PloggingRepository ploggingRepository;
     private final ResponseService responseService;
 
     private final RecordService recordService;
 
-    @PostMapping("")
+    @PostMapping("/finish")
     public SingleResult<RecordDTO> finish(@RequestBody RecordDTO recordDTO){
         log.info("[플로깅기록]");
         recordService.record(recordDTO);
