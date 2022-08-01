@@ -108,4 +108,16 @@ public class User implements UserDetails {
     @Column(name = "distance")
     @ColumnDefault("0")
     private double distance;
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    public boolean AddDistance(double newDistance) {
+        distance +=newDistance;
+        return true;
+    }
+
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+    public boolean AddCount() {
+        count++;
+        return true;
+    }
 }

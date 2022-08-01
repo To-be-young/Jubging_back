@@ -1,5 +1,6 @@
 package com.example.jubging.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -29,4 +30,5 @@ public class PloggingRecords {
 
     @Column(name = "activity_time", nullable = false)
     private String activityTime;
+
 }
