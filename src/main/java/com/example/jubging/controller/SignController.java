@@ -4,12 +4,16 @@ import com.example.jubging.model.dto.LoginDTO;
 import com.example.jubging.model.dto.TokenDTO;
 import com.example.jubging.model.dto.UserDTO;
 import com.example.jubging.model.response.SingleResult;
-import com.example.jubging.repository.UserRepository;
+import com.example.jubging.model.response.repository.UserRepository;
+import com.example.jubging.service.RecordService;
 import com.example.jubging.service.response.ResponseService;
 import com.example.jubging.service.SignService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -19,7 +23,7 @@ public class SignController {
     private final UserRepository userRepository;
     private final SignService signService;
     private final ResponseService responseService;
-
+    private final RecordService recordService;
 
     //    TODO
     @PostMapping("/login")
@@ -35,5 +39,6 @@ public class SignController {
         signService.signUp(userDTO);
         return responseService.getSingleResult(userDTO.getUserId());
     }
+
 
 }

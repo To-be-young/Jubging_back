@@ -1,7 +1,7 @@
 package com.example.jubging.service;
 
 import com.example.jubging.advice.exception.CUserNotFoundException;
-import com.example.jubging.repository.UserRepository;
+import com.example.jubging.model.response.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

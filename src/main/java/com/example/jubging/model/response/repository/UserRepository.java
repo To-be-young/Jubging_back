@@ -1,4 +1,4 @@
-package com.example.jubging.repository;
+package com.example.jubging.model.response.repository;
 
 import com.example.jubging.model.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;

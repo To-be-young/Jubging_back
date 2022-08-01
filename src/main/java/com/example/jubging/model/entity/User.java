@@ -2,6 +2,7 @@ package com.example.jubging.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +20,8 @@ import java.util.stream.Collectors;
 @Getter
 @Table(name = "user")
 public class User implements UserDetails {
+//    자동으로 생성
+// 값을 받을 필요 없음
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -98,4 +101,11 @@ public class User implements UserDetails {
     // TODO
     // 토큰
     // 누적 플로깅 거리, 횟수 정보
+    @Column(name = "count")
+    @ColumnDefault("0")
+    private int count;
+
+    @Column(name = "distance")
+    @ColumnDefault("0")
+    private double distance;
 }
