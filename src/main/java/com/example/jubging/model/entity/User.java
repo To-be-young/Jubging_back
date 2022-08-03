@@ -37,6 +37,9 @@ public class User implements UserDetails {
     @Column(name = "password", nullable = false)
     private String password;
 
+    @Column(name = "nickname", nullable = false)
+    private String nickname;
+
     @Column(name = "phone_number")
     private String phoneNumber;
 
@@ -107,7 +110,7 @@ public class User implements UserDetails {
 
     @Column(name = "distance")
     @ColumnDefault("0")
-    private double distance;
+    private Double distance;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public boolean AddDistance(double newDistance) {

@@ -22,6 +22,7 @@ public class UserDTO {
     private String userId;
 
     private String password;
+    private String nickname;
 
     private String phoneNumber;
 
@@ -35,6 +36,7 @@ public class UserDTO {
                 .id(id)
                 .name(name)
                 .password(passwordEncoder.encode(password))
+                .nickname(nickname)
                 .userId(userId)
                 .phoneNumber(phoneNumber)
                 .age(age)
