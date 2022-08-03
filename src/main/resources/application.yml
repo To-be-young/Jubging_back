@@ -29,7 +29,7 @@ spring:
     url: jdbc:mysql://localhost:3306/jubging?serverTimezone=UTC&characterEncoding=UTF-8
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: 100412
+    password: 108256
   jpa:
     database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
     properties.hibernate:
