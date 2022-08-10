@@ -15,13 +15,12 @@ import java.util.Collections;
 @AllArgsConstructor
 @NoArgsConstructor
 public class UserDTO {
-    private Long id;
-
     private String name;
 
     private String userId;
 
     private String password;
+
     private String nickname;
 
     private String phoneNumber;
@@ -33,7 +32,6 @@ public class UserDTO {
 
     public User toEntity(PasswordEncoder passwordEncoder){
         return User.builder()
-                .id(id)
                 .name(name)
                 .password(passwordEncoder.encode(password))
                 .nickname(nickname)

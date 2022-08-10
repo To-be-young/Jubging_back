@@ -41,9 +41,14 @@ public class JwtAuthenticationFilter extends GenericFilterBean {
             log.info("[토큰 유효성 확인]");
             // validateToken : Jwt 토큰의 유효성 + 만료일자 확인
             Authentication auth = jwtTokenProvider.getAuthentication(token);
+
+            log.info("[토큰 유효성 + 만료일자 확인]");
             // getAuthentication : Jwt 토큰으로 인증 정보 조회
             SecurityContextHolder.getContext().setAuthentication(auth);
+            log.info("[토큰으로 인증 정보 조회]");
         }
+
         filterChain.doFilter(request, response);
+        log.info("[Do filter]");
     }
 }
