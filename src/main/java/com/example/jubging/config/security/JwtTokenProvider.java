@@ -1,7 +1,7 @@
 package com.example.jubging.config.security;
 
-import com.example.jubging.model.dto.TokenDTO;
-import com.example.jubging.service.CustomUserDetailService;
+import com.example.jubging.DTO.TokenDTO;
+import com.example.jubging.Service.CustomUserDetailService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.impl.Base64UrlCodec;
 import lombok.RequiredArgsConstructor;

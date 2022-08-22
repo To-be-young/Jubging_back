@@ -1,0 +1,19 @@
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/jubging?serverTimezone=UTC&characterEncoding=UTF-8
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: 100412
+  jpa:
+    database-platform: org.hibernate.dialect.MySQL5InnoDBDialect
+    properties.hibernate:
+      #      hbm2ddl.auto: none
+      format_sql: true
+    generate-ddl: true
+    show-sql: false
+    open-in-view: false
+    hibernate:
+      ddl-auto: create
+    database: mysql
+  url:
+    base: "deployServerBaseUrl"
