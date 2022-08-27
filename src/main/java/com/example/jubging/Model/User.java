@@ -30,7 +30,7 @@ public class User implements UserDetails {
     @Column(name = "name", nullable = false, length = 100)
     private String name;
 
-    @Column(name = "user_id", nullable = false)
+    @Column(name = "user_id", nullable = false, unique = true)
     private String userId;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
