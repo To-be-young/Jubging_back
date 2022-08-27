@@ -23,7 +23,7 @@ public class RecordService {
     public void record(final RecordDTO recordDTO) {
 
         // 플로깅 기록을 저장하려는 아이디가 유효한지 확인
-        User  user = userRepository.findByUserId(recordDTO.getUserId())
+        User user = userRepository.findByUserId(recordDTO.getUserId())
                 .orElseThrow(CEmailLoginFailedException::new);
         // user테이블의 count와 distance 증가
         user.AddCount();

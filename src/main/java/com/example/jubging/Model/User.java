@@ -109,8 +109,8 @@ public class User implements UserDetails {
     private int count;
 
     @Column(name = "distance")
-    @ColumnDefault("0")
-    private Double distance;
+    @ColumnDefault("0.0")
+    private double distance;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public boolean AddDistance(double newDistance) {
