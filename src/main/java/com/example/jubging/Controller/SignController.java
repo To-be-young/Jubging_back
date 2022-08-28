@@ -2,7 +2,7 @@ package com.example.jubging.Controller;
 
 import com.example.jubging.DTO.LoginDTO;
 import com.example.jubging.DTO.TokenDTO;
-import com.example.jubging.DTO.UserDTO;
+import com.example.jubging.DTO.SignUpDTO;
 import com.example.jubging.Response.SingleResult;
 import com.example.jubging.Service.SignService;
 import com.example.jubging.Service.response.ResponseService;
@@ -32,10 +32,10 @@ public class SignController {
     }
 
     @PostMapping("/signup")
-    public SingleResult<String> signUp(@RequestBody @Valid UserDTO userDTO) {
+    public SingleResult<String> signUp(@RequestBody @Valid SignUpDTO signUDTO) {
         log.info("[회원가입]");
-        signService.signUp(userDTO);
-        return responseService.getSingleResult(userDTO.getUserId());
+        signService.signUp(signUDTO);
+        return responseService.getSingleResult(signUDTO.getUserId());
     }
 
 

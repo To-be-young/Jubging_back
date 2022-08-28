@@ -4,7 +4,7 @@ import com.example.jubging.Exception.CEmailLoginFailedException;
 import com.example.jubging.config.security.JwtTokenProvider;
 import com.example.jubging.DTO.LoginDTO;
 import com.example.jubging.DTO.TokenDTO;
-import com.example.jubging.DTO.UserDTO;
+import com.example.jubging.DTO.SignUpDTO;
 import com.example.jubging.Model.RefreshToken;
 import com.example.jubging.Model.User;
 import com.example.jubging.Repository.TokenRepository;
@@ -62,7 +62,7 @@ public class SignService {
     // 아이디 중복체크
     // 중복시 회원가입 X
     @Transactional
-    public void signUp(final UserDTO userDTO) {
-        userRepository.save(userDTO.toEntity(passwordEncoder));
+    public void signUp(final SignUpDTO singUpDTO) {
+        userRepository.save(singUpDTO.toEntity(passwordEncoder));
     }
 }

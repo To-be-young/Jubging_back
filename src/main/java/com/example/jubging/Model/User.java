@@ -26,10 +26,6 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 필수 입력
-    @Column(name = "name", nullable = false, length = 100)
-    private String name;
-
     @Column(name = "user_id", nullable = false, unique = true)
     private String userId;
 
@@ -43,11 +39,13 @@ public class User implements UserDetails {
     @Column(name = "phone_number")
     private String phoneNumber;
 
-    @Column(name = "age")
-    private int age;
+    @Column(name = "count")
+    @ColumnDefault("0")
+    private int count;
 
-    @Column(name = "gender")
-    private Gender gender;
+    @Column(name = "distance")
+    @ColumnDefault("0.0")
+    private double distance;
 
     @ElementCollection
     @Builder.Default
@@ -100,17 +98,6 @@ public class User implements UserDetails {
     public boolean isEnabled() {
         return false;
     }
-
-    // TODO
-    // 토큰
-    // 누적 플로깅 거리, 횟수 정보
-    @Column(name = "count")
-    @ColumnDefault("0")
-    private int count;
-
-    @Column(name = "distance")
-    @ColumnDefault("0.0")
-    private double distance;
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public boolean AddDistance(double newDistance) {
