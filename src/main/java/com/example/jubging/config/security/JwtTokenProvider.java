@@ -1,6 +1,7 @@
 package com.example.jubging.config.security;
 
 import com.example.jubging.DTO.TokenDTO;
+import com.example.jubging.Exception.CAuthenticationEntryPointException;
 import com.example.jubging.Service.CustomUserDetailService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.impl.Base64UrlCodec;
@@ -11,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
@@ -68,9 +70,28 @@ public class JwtTokenProvider {     // JWT 토큰을 생성 및 검증 모듈
     }
 
     // Jwt 토큰으로 인증 정보 조회
+    @Transactional
     public Authentication getAuthentication(String token){
-        UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
+        // Jwt 에서 claims 추출
+        Claims claims = parseClaims(token);
+
+        // 권한 정보가 없음
+        if (claims.get(ROLES) == null) {
+            throw new CAuthenticationEntryPointException();
+        }
+
+        UserDetails userDetails = userDetailsService.loadUserByUsername(claims.getSubject());
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+
+    }
+
+    // Jwt 토큰 복호화해서 가져오기
+    private Claims parseClaims(String token) {
+        try {
+            return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody();
+        } catch (ExpiredJwtException e) {
+            return e.getClaims();
+        }
     }
 
     // Jwt 토큰에서 회원 구별 정보 추출
