@@ -26,6 +26,7 @@ public class UserService {
     }
     // TODO
     // 보내줄 정보 -> total distance, count
+    @Transactional
     public UserPageDTO getUserPage(String userId) throws UsernameNotFoundException {
         User user = userRepository.findByUserId(userId)
                 .orElseThrow(CUserNotFoundException::new);

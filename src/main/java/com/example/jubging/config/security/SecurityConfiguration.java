@@ -32,11 +32,18 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
+//                .and()
+//                    .authorizeRequests()
+//                        .antMatchers(HttpMethod.POST, "/*/*/login", "/*/*/signup","/*/*/finish","/*/*/user-emails/exists","/*/*/user-nickname/exists").permitAll()
+//                        .antMatchers(HttpMethod.GET, "/api/user/user-page").permitAll()
+//                        .anyRequest().hasRole("USER")
+
                 .and()
                     .authorizeRequests()
                         .antMatchers(HttpMethod.POST, "/*/*/login", "/*/*/signup","/*/*/finish","/*/*/user-emails/exists","/*/*/user-nickname/exists").permitAll()
-                        .antMatchers(HttpMethod.GET, "/api/user/user-page").permitAll()
-                        .anyRequest().hasRole("USER")
+                        .antMatchers(HttpMethod.GET, "/api/user/user-page").authenticated()
+                        .anyRequest().permitAll()
+
 
                 // jwt 인증 필터를 UsernamePasswordAuthenticationFilter.class 전에 넣는다.
                 .and()
