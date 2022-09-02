@@ -1,5 +1,6 @@
 package com.example.jubging.Controller;
 
+import com.example.jubging.DTO.PathwayDTO;
 import com.example.jubging.DTO.RecordDTO;
 import com.example.jubging.Response.SingleResult;
 import com.example.jubging.Repository.PloggingRepository;
@@ -27,5 +28,11 @@ public class PloggingFinishController {
         log.info("[플로깅기록]");
         recordService.record(recordDTO);
         return responseService.getSingleResult(recordDTO);
+    }
+
+    @PostMapping("/record-pathway")
+    public SingleResult<PathwayDTO> pathway(@RequestBody PathwayDTO pathwayDTO){
+        log.info("[경로저장]");
+        return responseService.getSingleResult(pathwayDTO);
     }
 }

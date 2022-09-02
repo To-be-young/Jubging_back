@@ -16,8 +16,9 @@ import java.time.LocalDateTime;
 @Table(name = "plogging_records")
 public class PloggingRecords {
     @Id
+    @Column(name="recordId")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long number;
+    private Long recordId;
 
     @Column(name = "user_id", nullable = false)
     private String userId;
@@ -26,9 +27,12 @@ public class PloggingRecords {
     private LocalDateTime date;
 
     @Column(name = "distance", nullable = false)
-    private Double distance;
+    private double distance;
 
     @Column(name = "activity_time", nullable = false)
     private String activityTime;
 
+    public Long getRecordId() {
+        return recordId;
+    }
 }
