@@ -4,16 +4,15 @@ import com.example.jubging.DTO.LoginDTO;
 import com.example.jubging.DTO.TokenDTO;
 import com.example.jubging.DTO.SignUpDTO;
 import com.example.jubging.Response.SingleResult;
+import com.example.jubging.Service.EmailService;
 import com.example.jubging.Service.SignService;
 import com.example.jubging.Service.response.ResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -22,6 +21,7 @@ import javax.validation.Valid;
 public class SignController {
     private final SignService signService;
     private final ResponseService responseService;
+    private final EmailService emailService;
 
     //    TODO
     @PostMapping("/login")
@@ -38,5 +38,26 @@ public class SignController {
         return responseService.getSingleResult(signUDTO.getUserId());
     }
 
+    // Todo
+    // send mail
+    @GetMapping("/email")
+    public SingleResult<String> emailAuth(@RequestBody Map<String, String> email) throws Exception{
+        log.info(email.get("email"));
+        emailService.sendSimpleMessage(email.get("email"));
+
+        return responseService.getSingleResult("send mail");
+    }
+
+//    @PostMapping("/verifyCode") // 이메일 인증 코드 검증
+//    public SingleResult<?> verifyCode(@RequestBody Map<String, String> code) {
+//        if(EmailService.ePw.equals(code.get("code"))) {
+//            log.info("[코드 검증] 성공");
+//            return responseService.getSingleResult("true");
+//        }
+//        else{
+//            log.info("[코드 검증] 실패");
+//            return responseService.getSingleResult("false");
+//        }
+//    }
 
 }

@@ -38,6 +38,4 @@ public class ExceptionAdvice {
         log.info("[회원가입시 필요한 값 없음]");
         return responseService.getFailResult(400, "[BAD REQUEST] 필요한 값 확인해주세요");
     }
-
-
 }
