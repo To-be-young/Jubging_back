@@ -1,10 +1,14 @@
 package com.example.jubging.Response;
 
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
-public class ListResult<T> extends CommonResult{
-    private ListResult<T> list;
+@Data
+public class ListResult<T> extends CommonResult {
+    private List<T> data;
 }
