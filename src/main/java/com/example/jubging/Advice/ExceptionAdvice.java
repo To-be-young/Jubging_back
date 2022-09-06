@@ -38,4 +38,10 @@ public class ExceptionAdvice {
         log.info("[회원가입시 필요한 값 없음]");
         return responseService.getFailResult(400, "[BAD REQUEST] 필요한 값 확인해주세요");
     }
+
+    @ExceptionHandler()
+    public CommonResult notFoundValidationCode(Exception e){
+        log.info("[이메일 인증 실패]");
+        return responseService.getFailResult(000, "[이메일 인증 실패] 이메일 인증 코드를 다시 확인해 주세요.");
+    }
 }

@@ -1,6 +1,7 @@
 package com.example.jubging.Service;
 
 import com.example.jubging.DTO.EmailValidateDTO;
+import com.example.jubging.Model.EmailValidationCode;
 import com.example.jubging.Repository.EmailValidateCodeRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +21,6 @@ public class EmailService {
     private final JavaMailSender emailSender;
     private final EmailValidateCodeRepository emailValidateCodeRepository;
     private final EmailValidateDTO emailValidateDTO;
-
     public final String validationCode = createKey();
 
     private MimeMessage createMessage(String to)throws Exception{
@@ -32,13 +32,12 @@ public class EmailService {
         message.setSubject("인증코드: " + validationCode); //제목
 
         String msg="";
-        msg += "<img width=\"120\" height=\"36\" style=\"margin-top: 0; margin-right: 0; margin-bottom: 32px; margin-left: 0px; padding-right: 30px; padding-left: 30px;\" src=\"https://slack.com/x-a1607371436052/img/slack_logo_240.png\" alt=\"\" loading=\"lazy\">";
+//        msg += "<img width=\"120\" height=\"36\" style=\"margin-top: 0; margin-right: 0; margin-bottom: 32px; margin-left: 0px; padding-right: 30px; padding-left: 30px;\" src=\"https://slack.com/x-a1607371436052/img/slack_logo_240.png\" alt=\"\" loading=\"lazy\">";
         msg += "<h1 style=\"font-size: 30px; padding-right: 30px; padding-left: 30px;\">이메일 주소 확인</h1>";
-        msg += "<p style=\"font-size: 17px; padding-right: 30px; padding-left: 30px;\">아래 확인 코드를 Slack 가입 창이 있는 브라우저 창에 입력하세요.</p>";
+        msg += "<p style=\"font-size: 17px; padding-right: 30px; padding-left: 30px;\">아래 확인 코드를 Jubgging 가입 창에 있는 코드 입력란에 적어주세요</p>";
         msg += "<div style=\"padding-right: 30px; padding-left: 30px; margin: 32px 0 40px;\"><table style=\"border-collapse: collapse; border: 0; background-color: #F4F4F4; height: 70px; table-layout: fixed; word-wrap: break-word; border-radius: 6px;\"><tbody><tr><td style=\"text-align: center; vertical-align: middle; font-size: 30px;\">";
         msg += validationCode;
         msg += "</td></tr></tbody></table></div>";
-        msg += "<a href=\"https://slack.com\" style=\"text-decoration: none; color: #434245;\" rel=\"noreferrer noopener\" target=\"_blank\">Slack Clone Technologies, Inc</a>";
 
         message.setText(msg, "utf-8", "html"); //내용
         message.setFrom(new InternetAddress("Jubgging@naver.com","Jubgging")); //보내는 사람
@@ -72,4 +71,18 @@ public class EmailService {
         }
     }
 
+    @Transactional
+    public boolean verifyEmailCode(String email, String code){
+        EmailValidationCode emailValidationCode = emailValidateCodeRepository.findByEmail(email).get();
+        String verifyCode = emailValidationCode.getCode();
+
+        log.info("DB속 인증코드: " + verifyCode);
+        log.info("입력 코드: " + code);
+        if (verifyCode.equals(code)){
+            return true;
+        }
+        else {
+            return false;
+        }
+    }
 }

@@ -1,5 +1,6 @@
 package com.example.jubging.Controller;
 
+import com.example.jubging.DTO.EmailVerifyDTO;
 import com.example.jubging.DTO.LoginDTO;
 import com.example.jubging.DTO.TokenDTO;
 import com.example.jubging.DTO.SignUpDTO;
@@ -23,7 +24,6 @@ public class SignController {
     private final ResponseService responseService;
     private final EmailService emailService;
 
-    //    TODO
     @PostMapping("/login")
     public SingleResult<TokenDTO> login(@RequestBody LoginDTO loginDTO) {
         log.info("[login 요청]");
@@ -48,16 +48,16 @@ public class SignController {
         return responseService.getSingleResult("send mail");
     }
 
-//    @PostMapping("/verifyCode") // 이메일 인증 코드 검증
-//    public SingleResult<?> verifyCode(@RequestBody Map<String, String> code) {
-//        if(EmailService.ePw.equals(code.get("code"))) {
-//            log.info("[코드 검증] 성공");
-//            return responseService.getSingleResult("true");
-//        }
-//        else{
-//            log.info("[코드 검증] 실패");
-//            return responseService.getSingleResult("false");
-//        }
-//    }
+    @PostMapping("/verifyCode") // 이메일 인증 코드 검증
+    public SingleResult<?> verifyCode(@RequestBody EmailVerifyDTO emailVerifyDTO) {
+        boolean verifingCode = emailService.verifyEmailCode(emailVerifyDTO.getEmail(), emailVerifyDTO.getCode());
+        log.info("인증여부: " + verifingCode);
 
+        if(verifingCode){
+            return responseService.getSingleResult("true");
+        }
+        else{
+            return throw
+        }
+    }
 }
