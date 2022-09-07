@@ -22,7 +22,7 @@ public class ResponseService {
     // 복수건 결과 처리 메서드
     public <T> ListResult<T> getListResult(List<T> list) {
         ListResult<T> result = new ListResult<>();
-        result.setList((ListResult<T>) list);
+        result.setData(list);
         setSuccessResult(result);
         return result;
     }

@@ -1,6 +1,7 @@
 package com.example.jubging.Service;
 
 import com.example.jubging.DTO.PathwayDTO;
+import com.example.jubging.DTO.PloggingLogDTO;
 import com.example.jubging.Exception.CEmailLoginFailedException;
 import com.example.jubging.DTO.RecordDTO;
 import com.example.jubging.Model.Pathway;
@@ -13,6 +14,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 import static java.lang.Math.log;
 
@@ -37,17 +40,20 @@ public class RecordService {
         user.AddDistance(recordDTO.getDistance());
 
 
+        //플로깅 기록저장
         PloggingRecords recordData= recordDTO.toEntity();
         ploggingRepository.save(recordData);
+
+        //플로깅 경로저장
         recordDTO.getPathway().forEach(d->
                 pathwayRepository.save(d.toEntity(recordData))
                 );
 
-//        for(PathwayDTO data:recordDTO.getPathway()){
-//            log.info("[경로저장]");
-//            log.info("[경로데이터]: ",data);
-//
-//        }
+    }
+
+    @Transactional
+    public List<PloggingRecords> getPloggingList(String userId){
+        return ploggingRepository.findByUserId(userId);
     }
 
 }
