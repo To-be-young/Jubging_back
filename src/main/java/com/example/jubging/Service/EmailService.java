@@ -23,6 +23,7 @@ public class EmailService {
     private final EmailValidateDTO emailValidateDTO;
     public final String validationCode = createKey();
 
+    @Transactional
     private MimeMessage createMessage(String to)throws Exception{
         log.info("보내는 대상 : "+ to);
         log.info("인증 번호 : " + validationCode);

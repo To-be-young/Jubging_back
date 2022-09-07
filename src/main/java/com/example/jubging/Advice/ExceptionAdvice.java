@@ -1,5 +1,6 @@
 package com.example.jubging.Advice;
 
+import com.example.jubging.Exception.EmailValidCodeException;
 import com.example.jubging.Response.CommonResult;
 import com.example.jubging.Service.response.ResponseService;
 import lombok.RequiredArgsConstructor;
@@ -29,19 +30,19 @@ public class ExceptionAdvice {
     @ExceptionHandler(DataIntegrityViolationException.class)
     public CommonResult singUpDuplicateUserIdException(Exception e){
         log.info("[회원가입 아이디 중복 오류 발생]");
-        return responseService.getFailResult(400, "[BAD REQUEST] 회원가입 중복 오류 발생");
+        return responseService.getFailResult(1000, "[BAD REQUEST] 회원가입 중복 오류 발생");
     }
 
 //    회원가입 no value
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public CommonResult signUpNoValueException(Exception e){
         log.info("[회원가입시 필요한 값 없음]");
-        return responseService.getFailResult(400, "[BAD REQUEST] 필요한 값 확인해주세요");
+        return responseService.getFailResult(1001, "[BAD REQUEST] 필요한 값 확인해주세요");
     }
 
-    @ExceptionHandler()
+    @ExceptionHandler(EmailValidCodeException.class)
     public CommonResult notFoundValidationCode(Exception e){
         log.info("[이메일 인증 실패]");
-        return responseService.getFailResult(000, "[이메일 인증 실패] 이메일 인증 코드를 다시 확인해 주세요.");
+        return responseService.getFailResult(1002, "[이메일 인증 실패] 이메일 인증 코드를 다시 확인해 주세요.");
     }
 }
