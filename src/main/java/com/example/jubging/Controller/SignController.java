@@ -4,6 +4,7 @@ import com.example.jubging.DTO.EmailVerifyDTO;
 import com.example.jubging.DTO.LoginDTO;
 import com.example.jubging.DTO.TokenDTO;
 import com.example.jubging.DTO.SignUpDTO;
+import com.example.jubging.Exception.EmailValidCodeException;
 import com.example.jubging.Response.SingleResult;
 import com.example.jubging.Service.EmailService;
 import com.example.jubging.Service.SignService;
@@ -57,7 +58,7 @@ public class SignController {
             return responseService.getSingleResult("true");
         }
         else{
-            return throw
+            throw new EmailValidCodeException();
         }
     }
 }
