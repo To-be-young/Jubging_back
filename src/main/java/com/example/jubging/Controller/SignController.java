@@ -1,19 +1,19 @@
 package com.example.jubging.Controller;
 
+import com.example.jubging.DTO.EmailVerifyDTO;
 import com.example.jubging.DTO.LoginDTO;
 import com.example.jubging.DTO.TokenDTO;
 import com.example.jubging.DTO.SignUpDTO;
 import com.example.jubging.Response.SingleResult;
+import com.example.jubging.Service.EmailService;
 import com.example.jubging.Service.SignService;
 import com.example.jubging.Service.response.ResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Map;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -22,8 +22,8 @@ import javax.validation.Valid;
 public class SignController {
     private final SignService signService;
     private final ResponseService responseService;
+    private final EmailService emailService;
 
-    //    TODO
     @PostMapping("/login")
     public SingleResult<TokenDTO> login(@RequestBody LoginDTO loginDTO) {
         log.info("[login 요청]");
@@ -38,5 +38,26 @@ public class SignController {
         return responseService.getSingleResult(signUDTO.getUserId());
     }
 
+    // Todo
+    // send mail
+    @GetMapping("/email")
+    public SingleResult<String> emailAuth(@RequestBody Map<String, String> email) throws Exception{
+        log.info(email.get("email"));
+        emailService.sendSimpleMessage(email.get("email"));
 
+        return responseService.getSingleResult("send mail");
+    }
+
+    @PostMapping("/verifyCode") // 이메일 인증 코드 검증
+    public SingleResult<?> verifyCode(@RequestBody EmailVerifyDTO emailVerifyDTO) {
+        boolean verifingCode = emailService.verifyEmailCode(emailVerifyDTO.getEmail(), emailVerifyDTO.getCode());
+        log.info("인증여부: " + verifingCode);
+
+        if(verifingCode){
+            return responseService.getSingleResult("true");
+        }
+        else{
+            return throw
+        }
+    }
 }

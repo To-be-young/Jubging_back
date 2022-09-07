@@ -32,15 +32,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
 
-//                .and()
-//                    .authorizeRequests()
-//                        .antMatchers(HttpMethod.POST, "/*/*/login", "/*/*/signup","/*/*/finish","/*/*/user-emails/exists","/*/*/user-nickname/exists").permitAll()
-//                        .antMatchers(HttpMethod.GET, "/api/user/user-page").permitAll()
-//                        .anyRequest().hasRole("USER")
-
                 .and()
                     .authorizeRequests()
-                        .antMatchers(HttpMethod.POST, "/*/*/login", "/*/*/signup","/*/*/finish","/*/*/user-emails/exists","/*/*/user-nickname/exists").permitAll()
+                        .antMatchers(HttpMethod.POST, "/**/login", "/*/*/signup","/*/*/finish","/*/*/user-emails/exists","/*/*/user-nickname/exists", "/api/sign/verifyCode").permitAll()
+                        .antMatchers(HttpMethod.GET, "/api/sign/email").permitAll()
                         .antMatchers(HttpMethod.GET, "/api/user/user-page").authenticated()
                         .anyRequest().permitAll()
 
