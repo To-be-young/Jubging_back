@@ -1,10 +1,7 @@
 package com.example.jubging.Service;
 
-import com.example.jubging.DTO.PathwayDTO;
-import com.example.jubging.DTO.PloggingLogDTO;
 import com.example.jubging.Exception.CEmailLoginFailedException;
 import com.example.jubging.DTO.RecordDTO;
-import com.example.jubging.Model.Pathway;
 import com.example.jubging.Model.PloggingRecords;
 import com.example.jubging.Model.User;
 import com.example.jubging.Repository.PathwayRepository;
@@ -12,12 +9,11 @@ import com.example.jubging.Repository.PloggingRepository;
 import com.example.jubging.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-
-import static java.lang.Math.log;
 
 @Slf4j
 @Service
@@ -51,9 +47,19 @@ public class RecordService {
 
     }
 
+    // 플로깅 리스트
+    // return List<PloggingRecords>
     @Transactional
     public List<PloggingRecords> getPloggingList(String userId){
         return ploggingRepository.findByUserId(userId);
+    }
+
+    // 플로깅 경로
+    // return: Object[]
+    @Transactional
+    public List<Object[]> getPathway(Long recordId){
+        List<Object[]> pathway= pathwayRepository.getPathway(recordId, Sort.by(Sort.Direction.ASC, "time"));
+        return  pathway;
     }
 
 }

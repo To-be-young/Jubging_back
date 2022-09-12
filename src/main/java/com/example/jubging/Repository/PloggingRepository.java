@@ -1,6 +1,5 @@
 package com.example.jubging.Repository;
 
-import com.example.jubging.DTO.PloggingLogDTO;
 import com.example.jubging.Model.PloggingRecords;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -4,7 +4,6 @@ import com.example.jubging.Model.Pathway;
 import com.example.jubging.Model.PloggingRecords;
 import lombok.*;
 
-import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -16,9 +15,9 @@ public class PathwayDTO {
     private double latitude;
     private double longitude;
 
-    public Pathway toEntity(PloggingRecords ploggingRecords){
+    public Pathway toEntity(PloggingRecords ploggingRecord){
         return Pathway.builder()
-                .recordId(ploggingRecords)
+                .recordId(ploggingRecord)
                 .time(time)
                 .latitude(latitude)
                 .longitude(longitude)
