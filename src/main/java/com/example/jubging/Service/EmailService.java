@@ -21,10 +21,9 @@ public class EmailService {
     private final JavaMailSender emailSender;
     private final EmailValidateCodeRepository emailValidateCodeRepository;
     private final EmailValidateDTO emailValidateDTO;
-    public final String validationCode = createKey();
 
-    @Transactional
     private MimeMessage createMessage(String to)throws Exception{
+        String validationCode = createKey();
         log.info("보내는 대상 : "+ to);
         log.info("인증 번호 : " + validationCode);
         MimeMessage message = emailSender.createMimeMessage();

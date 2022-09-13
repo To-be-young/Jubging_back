@@ -41,7 +41,7 @@ public class SignController {
 
     // Todo
     // send mail
-    @GetMapping("/email")
+    @PostMapping("/email")
     public SingleResult<String> emailAuth(@RequestBody Map<String, String> email) throws Exception{
         log.info(email.get("email"));
         emailService.sendSimpleMessage(email.get("email"));
