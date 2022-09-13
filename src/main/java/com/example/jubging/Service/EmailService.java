@@ -22,17 +22,23 @@ public class EmailService {
     private final EmailValidateCodeRepository emailValidateCodeRepository;
     private final EmailValidateDTO emailValidateDTO;
 
-    private MimeMessage createMessage(String to)throws Exception{
+    /**
+     * 이메일 인증 절차
+     * 인증을 위한 이메일 포스트를 만듬
+     * 
+     * @param email
+     *        수신자 이메일
+     */
+    private MimeMessage createMessage(String email)throws Exception{
         String validationCode = createKey();
-        log.info("보내는 대상 : "+ to);
+        log.info("보내는 대상 : "+ email);
         log.info("인증 번호 : " + validationCode);
         MimeMessage message = emailSender.createMimeMessage();
 
-        message.addRecipients(MimeMessage.RecipientType.TO, to); //보내는 대상
+        message.addRecipients(MimeMessage.RecipientType.TO, email); //보내는 대상
         message.setSubject("인증코드: " + validationCode); //제목
 
         String msg="";
-//        msg += "<img width=\"120\" height=\"36\" style=\"margin-top: 0; margin-right: 0; margin-bottom: 32px; margin-left: 0px; padding-right: 30px; padding-left: 30px;\" src=\"https://slack.com/x-a1607371436052/img/slack_logo_240.png\" alt=\"\" loading=\"lazy\">";
         msg += "<h1 style=\"font-size: 30px; padding-right: 30px; padding-left: 30px;\">이메일 주소 확인</h1>";
         msg += "<p style=\"font-size: 17px; padding-right: 30px; padding-left: 30px;\">아래 확인 코드를 Jubgging 가입 창에 있는 코드 입력란에 적어주세요</p>";
         msg += "<div style=\"padding-right: 30px; padding-left: 30px; margin: 32px 0 40px;\"><table style=\"border-collapse: collapse; border: 0; background-color: #F4F4F4; height: 70px; table-layout: fixed; word-wrap: break-word; border-radius: 6px;\"><tbody><tr><td style=\"text-align: center; vertical-align: middle; font-size: 30px;\">";
@@ -42,12 +48,15 @@ public class EmailService {
         message.setText(msg, "utf-8", "html"); //내용
         message.setFrom(new InternetAddress("Jubgging@naver.com","Jubgging")); //보내는 사람
 
-        emailValidateCodeRepository.save(emailValidateDTO.toEntity(to, validationCode));
+        emailValidateCodeRepository.save(emailValidateDTO.toEntity(email, validationCode));
 
         return message;
     }
 
-    // 인증코드 만들기
+    /**
+     * 이메일 인증을 위한 6자리 코드를 만듬
+     *
+     */
     @Transactional
     public String createKey() {
         StringBuffer key = new StringBuffer();
@@ -60,9 +69,17 @@ public class EmailService {
         return key.toString();
     }
 
+    /**
+     * 이메일 보내기
+     *
+     * @param email
+     *  수신자 이메일
+     * @throws
+     *  MailException
+     */
     @Transactional
-    public void sendSimpleMessage(String to)throws Exception {
-        MimeMessage message = createMessage(to);
+    public void sendSimpleMessage(String email)throws Exception {
+        MimeMessage message = createMessage(email);
         try{//예외처리
             emailSender.send(message);
         }catch(MailException es){
@@ -84,5 +101,18 @@ public class EmailService {
         else {
             return false;
         }
+    }
+
+    /**
+     * 인증코드 재발급
+     * @param email
+     *      재발급 받을 이메일
+     */
+    @Transactional
+    public void refreshVerifyEmailCode(String email) throws Exception {
+        // 1. 현재있는 인증코드 삭제
+        emailValidateCodeRepository.deleteByEmail(email);
+        // 2. 재발급
+        sendSimpleMessage(email);
     }
 }
