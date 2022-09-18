@@ -88,6 +88,15 @@ public class EmailService {
         }
     }
 
+    /**
+     * 이메일 인증
+     * @param email
+     *      이메일인증할 사용자의 이메일
+     * @param code
+     *      인증을 할 인증 코드
+     * @return
+     *      인증한 코드가 맞는지 아닌지 boolean형으로 준다.
+     */
     @Transactional
     public boolean verifyEmailCode(String email, String code){
         EmailValidationCode emailValidationCode = emailValidateCodeRepository.findByEmail(email).get();
@@ -110,9 +119,7 @@ public class EmailService {
      */
     @Transactional
     public void refreshVerifyEmailCode(String email) throws Exception {
-        // 1. 현재있는 인증코드 삭제
         emailValidateCodeRepository.deleteByEmail(email);
-        // 2. 재발급
         sendSimpleMessage(email);
     }
 }
