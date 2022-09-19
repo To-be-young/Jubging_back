@@ -24,7 +24,7 @@ public class PloggingController {
     @PostMapping("/finish")
     public SingleResult<RecordDTO> finish(@RequestBody RecordDTO recordDTO){
         log.info("[플로깅기록]");
-        recordService.record(recordDTO);
+        recordService.ploggingRecord(recordDTO);
         return responseService.getSingleResult(recordDTO);
     }
     // 플로깅 기록 리스트 나열

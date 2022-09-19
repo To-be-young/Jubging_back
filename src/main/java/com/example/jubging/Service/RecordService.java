@@ -26,7 +26,7 @@ public class RecordService {
     private final PathwayRepository pathwayRepository;
 
     @Transactional
-    public void record(final RecordDTO recordDTO) {
+    public void ploggingRecord(final RecordDTO recordDTO) {
 
         // 플로깅 기록을 저장하려는 아이디가 유효한지 확인
         User user = userRepository.findByUserId(recordDTO.getUserId())
