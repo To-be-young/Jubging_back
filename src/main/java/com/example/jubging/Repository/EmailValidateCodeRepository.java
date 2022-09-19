@@ -10,4 +10,6 @@ import java.util.Optional;
 public interface EmailValidateCodeRepository extends JpaRepository<EmailValidationCode, Long> {
     Optional<EmailValidationCode> findByEmail(String email);
 
+    void deleteByEmail(String email);
+
 }

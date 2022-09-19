@@ -27,8 +27,8 @@ public class UserController {
         return responseService.getSingleResult(userService.checkNicknameDuplicate(nickname));
     }
 
-    @GetMapping("/user-page")
-    public SingleResult<UserPageDTO> getUserPage(@RequestParam("userId") String userId){
+    @GetMapping("/userpage/plogging-status")
+    public SingleResult<UserPageDTO> getUserPloggingStatus(@RequestParam("userId") String userId){
         log.info("[마이페이지 기능]");
         log.info(userId);
         return responseService.getSingleResult(userService.getUserPage(userId));
