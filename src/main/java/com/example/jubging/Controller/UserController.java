@@ -8,6 +8,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -28,9 +30,8 @@ public class UserController {
     }
 
     @GetMapping("/userpage/plogging-status")
-    public SingleResult<UserPageDTO> getUserPloggingStatus(@RequestParam("userId") String userId){
+    public SingleResult<UserPageDTO> getUserPloggingStatus(HttpServletRequest request){
         log.info("[마이페이지 기능]");
-        log.info(userId);
-        return responseService.getSingleResult(userService.getUserPage(userId));
+        return responseService.getSingleResult(userService.getUserPage(request));
     }
 }
