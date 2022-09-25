@@ -1,5 +1,6 @@
 package com.example.jubging.Service;
 
+import com.example.jubging.DTO.PageDTO;
 import com.example.jubging.Exception.CEmailLoginFailedException;
 import com.example.jubging.DTO.RecordDTO;
 import com.example.jubging.Model.PloggingRecords;
@@ -53,10 +54,11 @@ public class RecordService {
     // 플로깅 리스트
     // return List<PloggingRecords>
     @Transactional
-    public Page<PloggingRecords> getPloggingList(String userId,int page){
+    public PageDTO getPloggingList(String userId, int page){
         PageRequest pageRequest = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "recordId"));
         Page<PloggingRecords> ploggingPage = ploggingRepository.findByUserId(userId, pageRequest);
-        return ploggingPage;
+        PageDTO pageDTO = new PageDTO(ploggingPage.getContent(),page,ploggingPage.getSize(),ploggingPage.getTotalPages(),ploggingPage.getTotalElements());
+        return pageDTO;
 
     }
 

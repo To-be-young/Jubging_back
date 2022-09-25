@@ -1,5 +1,6 @@
 package com.example.jubging.Controller;
 
+import com.example.jubging.DTO.PageDTO;
 import com.example.jubging.DTO.RecordDTO;
 import com.example.jubging.Model.PloggingRecords;
 import com.example.jubging.Response.ListResult;
@@ -32,7 +33,7 @@ public class PloggingController {
     }
     // 플로깅 기록 리스트 나열
     @GetMapping("/log_list")
-    public SingleResult <Page<PloggingRecords>> logList(@RequestParam("userId") String userId,@RequestParam(required = false,defaultValue = "0",value = "page")int page){
+    public SingleResult <PageDTO> logList(@RequestParam("userId") String userId, @RequestParam(required = false,defaultValue = "0",value = "page")int page){
         log.info("[플로깅기록 리스트]");
         return responseService.getSingleResult(recordService.getPloggingList(userId,page));
     }
