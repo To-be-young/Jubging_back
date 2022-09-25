@@ -1,7 +1,9 @@
 package com.example.jubging.Service;
 
+import com.example.jubging.DTO.PathwayDTO;
 import com.example.jubging.Exception.CEmailLoginFailedException;
 import com.example.jubging.DTO.RecordDTO;
+import com.example.jubging.Model.Pathway;
 import com.example.jubging.Model.PloggingRecords;
 import com.example.jubging.Model.User;
 import com.example.jubging.Repository.PathwayRepository;
@@ -17,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -62,11 +65,13 @@ public class RecordService {
     }
 
     // 플로깅 경로
-    // return: Object[]
     @Transactional
-    public List<Object[]> getPathway(Long recordId){
-        List<Object[]> pathway= pathwayRepository.getPathway(recordId, Sort.by(Sort.Direction.ASC, "time"));
-        return  pathway;
+    public List<PathwayDTO> getPathway(Long recordId){
+        PloggingRecords ploggingRecords=ploggingRepository.findByRecordId(recordId);
+        List<Pathway> pathway= pathwayRepository.getPathway(recordId);
+        List<PathwayDTO> pathwayDTO = pathway.stream().map(h-> new PathwayDTO(h.getTime(),h.getLatitude(),h.getLongitude()))
+                .collect(Collectors.toList());
+        return  pathwayDTO;
     }
 
 }

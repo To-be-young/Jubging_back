@@ -8,7 +8,6 @@ import lombok.*;
 @Getter
 @Setter
 @Builder
-@AllArgsConstructor
 @NoArgsConstructor
 public class PathwayDTO {
     private String time;
@@ -22,5 +21,11 @@ public class PathwayDTO {
                 .latitude(latitude)
                 .longitude(longitude)
                 .build();
+    }
+
+    public PathwayDTO(String time, double latitude, double longitude) {
+        this.time = time;
+        this.latitude = latitude;
+        this.longitude = longitude;
     }
 }

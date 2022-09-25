@@ -1,6 +1,8 @@
 package com.example.jubging.Controller;
 
+import com.example.jubging.DTO.PathwayDTO;
 import com.example.jubging.DTO.RecordDTO;
+import com.example.jubging.Model.Pathway;
 import com.example.jubging.Model.PloggingRecords;
 import com.example.jubging.Response.ListResult;
 import com.example.jubging.Response.SingleResult;
@@ -29,12 +31,6 @@ public class PloggingController {
         recordService.record(request, recordDTO);
         return responseService.getSingleResult(recordDTO);
     }
-    // 플로깅 기록 리스트 나열
-//    @GetMapping("/log_list")
-//    public ListResult <PloggingRecords> logList(@RequestParam("userId") String userId){
-//        log.info("[플로깅기록 리스트]");
-//        return responseService.getListResult(recordService.getPloggingList(userId));
-//    }
 
     @GetMapping("/log_list")
     public ListResult <PloggingRecords> logList(HttpServletRequest request){
@@ -44,7 +40,7 @@ public class PloggingController {
 
     // 플로깅 상세 경로
     @GetMapping("/log_pathway")
-    public ListResult<Object[]> logPathway(@RequestParam("recordId") Long recordId){
+    public ListResult<PathwayDTO> logPathway(@RequestParam("recordId") Long recordId){
         log.info("[플로깅 경로]");
         return responseService.getListResult(recordService.getPathway(recordId));
     }
