@@ -11,6 +11,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
+
 @Slf4j
 @RequiredArgsConstructor
 @RestController
@@ -22,17 +24,24 @@ public class PloggingController {
     private final RecordService recordService;
     // 플로깅 완료시 기록 저장
     @PostMapping("/finish")
-    public SingleResult<RecordDTO> finish(@RequestBody RecordDTO recordDTO){
+    public SingleResult<RecordDTO> finish(HttpServletRequest request, @RequestBody RecordDTO recordDTO){
         log.info("[플로깅기록]");
-        recordService.record(recordDTO);
+        recordService.record(request, recordDTO);
         return responseService.getSingleResult(recordDTO);
     }
     // 플로깅 기록 리스트 나열
+//    @GetMapping("/log_list")
+//    public ListResult <PloggingRecords> logList(@RequestParam("userId") String userId){
+//        log.info("[플로깅기록 리스트]");
+//        return responseService.getListResult(recordService.getPloggingList(userId));
+//    }
+
     @GetMapping("/log_list")
-    public ListResult <PloggingRecords> logList(@RequestParam("userId") String userId){
+    public ListResult <PloggingRecords> logList(HttpServletRequest request){
         log.info("[플로깅기록 리스트]");
-        return responseService.getListResult(recordService.getPloggingList(userId));
+        return responseService.getListResult(recordService.getPloggingList(request));
     }
+
     // 플로깅 상세 경로
     @GetMapping("/log_pathway")
     public ListResult<Object[]> logPathway(@RequestParam("recordId") Long recordId){
