@@ -104,6 +104,13 @@ public class JwtTokenProvider {     // JWT 토큰을 생성 및 검증 모듈
         return req.getHeader("X-AUTH-TOKEN");
     }
 
+    public Long getUserId(HttpServletRequest request){
+        String token = this.resolveToken(request);
+        Long userId = Long.parseLong(this.getUserPk(token));
+
+        return userId;
+    }
+
     // Jwt 토큰의 유쇼성 + 만료일자 확인
     public boolean validateToken(String token) {
         try {
