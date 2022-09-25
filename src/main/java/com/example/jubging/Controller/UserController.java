@@ -8,8 +8,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-
 @Slf4j
 @RestController
 @RequiredArgsConstructor
@@ -29,9 +27,10 @@ public class UserController {
         return responseService.getSingleResult(userService.checkNicknameDuplicate(nickname));
     }
 
-    @GetMapping("/userpage/plogging-status")
-    public SingleResult<UserPageDTO> getUserPloggingStatus(HttpServletRequest request){
+    @GetMapping("/user-page")
+    public SingleResult<UserPageDTO> getUserPage(@RequestParam("userId") String userId){
         log.info("[마이페이지 기능]");
-        return responseService.getSingleResult(userService.getUserPage(request));
+        log.info(userId);
+        return responseService.getSingleResult(userService.getUserPage(userId));
     }
 }

@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 
@@ -22,7 +21,7 @@ import java.util.stream.Collectors;
 public class CommunityPost {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long postId;
+    private Long id;
     // 제목
     @Column(name = "title", nullable = false)
     private String title;
@@ -35,33 +34,20 @@ public class CommunityPost {
     // 한줄소개
     @Column(name = "content",nullable = false)
     private String content;
-    // 활동조건
-    @Column(name = "qualification",nullable = false)
-    private String qualification;
-    // 집결 시간
+    // 모집 날자
     @Column(name="gatheringTime",nullable = false)
     private String gatheringTime;
-    // 종료 시간
-    @Column(name="endingTime",nullable = false)
-    private String endingTime;
-    // 집결장소
-    @Column(name = "Place",nullable = false)
-    private String gatheringPlace;
     // 모집 정원
     @Column(name = "capacity",nullable = false)
     private int capacity;
-    // 참여인원
-    @Column(name="participant")
-    private int participant;
-    // 기타
-    @Column(name = "etc",nullable = false)
-    private String etc;
-    // 이미지
-    @Column(name = "postImage",nullable = false)
-    private String postImage;
-    // 모집중
-    @Column(name = "recruiting",nullable = false)
-    private boolean recruiting;
-
+    // 활동조건
+    @Column(name = "qualification",nullable = false)
+    private String qualification;
+    // 집결장소
+    @Column(name = "Place",nullable = false)
+    private String gatheringPlace;
+    // 문의
+    @Column(name = "inquiry",nullable = false)
+    private String inquiry;
 
 }
