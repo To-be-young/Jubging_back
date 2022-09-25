@@ -10,6 +10,7 @@ public interface PloggingRepository extends JpaRepository<PloggingRecords, Long>
 
     PloggingRecords findByRecordId(Long recordId);
 
-    List<PloggingRecords> findByUserId(String UserId);
+//    List<PloggingRecords> findByUserId(String UserId);
 
+    List<PloggingRecords> findByUserId(Long userId);
 }
