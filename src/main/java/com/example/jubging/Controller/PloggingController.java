@@ -9,7 +9,10 @@ import com.example.jubging.Service.RecordService;
 import com.example.jubging.Service.response.ResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
+
+import java.awt.print.Pageable;
 
 @Slf4j
 @RequiredArgsConstructor
@@ -29,9 +32,9 @@ public class PloggingController {
     }
     // 플로깅 기록 리스트 나열
     @GetMapping("/log_list")
-    public ListResult <PloggingRecords> logList(@RequestParam("userId") String userId){
+    public SingleResult <Page<PloggingRecords>> logList(@RequestParam("userId") String userId,@RequestParam(required = false,defaultValue = "0",value = "page")int page){
         log.info("[플로깅기록 리스트]");
-        return responseService.getListResult(recordService.getPloggingList(userId));
+        return responseService.getSingleResult(recordService.getPloggingList(userId,page));
     }
     // 플로깅 상세 경로
     @GetMapping("/log_pathway")

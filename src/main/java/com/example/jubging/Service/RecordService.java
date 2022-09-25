@@ -9,10 +9,13 @@ import com.example.jubging.Repository.PloggingRepository;
 import com.example.jubging.Repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.awt.print.Pageable;
 import java.util.List;
 
 @Slf4j
@@ -50,8 +53,11 @@ public class RecordService {
     // 플로깅 리스트
     // return List<PloggingRecords>
     @Transactional
-    public List<PloggingRecords> getPloggingList(String userId){
-        return ploggingRepository.findByUserId(userId);
+    public Page<PloggingRecords> getPloggingList(String userId,int page){
+        PageRequest pageRequest = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "recordId"));
+        Page<PloggingRecords> ploggingPage = ploggingRepository.findByUserId(userId, pageRequest);
+        return ploggingPage;
+
     }
 
     // 플로깅 경로
