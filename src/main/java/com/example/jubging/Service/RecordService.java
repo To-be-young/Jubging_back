@@ -57,7 +57,7 @@ public class RecordService {
     public PageDTO getPloggingList(String userId, int page){
         PageRequest pageRequest = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "recordId"));
         Page<PloggingRecords> ploggingPage = ploggingRepository.findByUserId(userId, pageRequest);
-        PageDTO pageDTO = new PageDTO(ploggingPage.getContent(),page,ploggingPage.getSize(),ploggingPage.getTotalPages(),ploggingPage.getTotalElements());
+        PageDTO pageDTO = new PageDTO(ploggingPage.getTotalPages(),ploggingPage.getTotalElements(),ploggingPage.getSize(),page,ploggingPage.getContent());
         return pageDTO;
 
     }
