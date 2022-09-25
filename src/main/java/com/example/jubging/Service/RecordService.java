@@ -7,13 +7,16 @@ import com.example.jubging.Model.User;
 import com.example.jubging.Repository.PathwayRepository;
 import com.example.jubging.Repository.PloggingRepository;
 import com.example.jubging.Repository.UserRepository;
+import com.example.jubging.config.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Optional;
 
 @Slf4j
 @Service
@@ -24,20 +27,22 @@ public class RecordService {
 
     private final UserRepository userRepository;
     private final PathwayRepository pathwayRepository;
+    private final JwtTokenProvider jwtTokenProvider;
 
     @Transactional
-    public void record(final RecordDTO recordDTO) {
+    public void record(HttpServletRequest request, RecordDTO recordDTO) {
+        Long userId = jwtTokenProvider.getUserId(request);
 
         // 플로깅 기록을 저장하려는 아이디가 유효한지 확인
-        User user = userRepository.findByUserId(recordDTO.getUserId())
+        User user = userRepository.findById(userId)
                 .orElseThrow(CEmailLoginFailedException::new);
-        // user테이블의 count와 distance 증가
+
+        // user 테이블의 count와 distance 증가
         user.AddCount();
         user.AddDistance(recordDTO.getDistance());
 
-
         //플로깅 기록저장
-        PloggingRecords recordData= recordDTO.toEntity();
+        PloggingRecords recordData = recordDTO.toEntity(userId);
         ploggingRepository.save(recordData);
 
         //플로깅 경로저장
@@ -50,7 +55,9 @@ public class RecordService {
     // 플로깅 리스트
     // return List<PloggingRecords>
     @Transactional
-    public List<PloggingRecords> getPloggingList(String userId){
+    public List<PloggingRecords> getPloggingList(HttpServletRequest request){
+        Long userId = jwtTokenProvider.getUserId(request);
+
         return ploggingRepository.findByUserId(userId);
     }
 
