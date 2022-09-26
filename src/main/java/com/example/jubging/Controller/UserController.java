@@ -51,7 +51,7 @@ public class UserController {
      * @param request
      * @return
      */
-    @GetMapping("")
+    @GetMapping("/get-user-info")
     public SingleResult<UserInfoDTO> getUserInfo(HttpServletRequest request){
         return responseService.getSingleResult(userService.getUserInfo(request));
     }

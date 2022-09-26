@@ -38,7 +38,6 @@ public class UserService {
     public UserPageDTO getUserPage(HttpServletRequest request) throws UsernameNotFoundException {
         Long userId = jwtTokenProvider.getUserId(request);
 
-
         User user = userRepository.findById(userId)
                 .orElseThrow(CUserNotFoundException::new);
 
@@ -69,7 +68,6 @@ public class UserService {
 
         User user = userRepository.findById(userId)
                 .orElseThrow(CUserNotFoundException::new);
-
 
         return UserInfoDTO.getUserInfo(user);
     }
