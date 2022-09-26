@@ -4,6 +4,7 @@ import com.example.jubging.DTO.PageDTO;
 import com.example.jubging.Exception.CEmailLoginFailedException;
 import com.example.jubging.DTO.RecordDTO;
 import com.example.jubging.Exception.CUserNotFoundException;
+import com.example.jubging.Model.Pathway;
 import com.example.jubging.Model.PloggingRecords;
 import com.example.jubging.Model.User;
 import com.example.jubging.Repository.PathwayRepository;
@@ -18,9 +19,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
-import java.awt.print.Pageable;
 import java.util.List;
 
 @Slf4j
@@ -69,6 +68,7 @@ public class RecordService {
         return pageDTO;
 
     }
+
 
     // 플로깅 경로
     // return: Object[]

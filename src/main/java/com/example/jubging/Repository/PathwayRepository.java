@@ -12,8 +12,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 public interface PathwayRepository extends JpaRepository<Pathway, PathwayId> {
-   // @Query(value = "select pathway from Pathway pathway where pathway.recordId.recordId in :recordId")
-   // List<Object[]> getPathway(@Param(value = "recordId") Long recordId, Sort time);
-    @Query(value = "select pathway from Pathway pathway where pathway.recordId.recordId in :recordId")
-    List<Pathway> getPathway(Long recordId);
+    @Query(value = "select pathway.time,pathway.latitude,pathway.longitude from Pathway pathway where pathway.recordId.recordId in :recordId")
+    List<Object[]> getPathway(@Param(value = "recordId") Long recordId, Sort time);
+
 }
