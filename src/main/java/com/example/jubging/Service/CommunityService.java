@@ -51,11 +51,11 @@ public class CommunityService {
         PageDTO pageDTO = new PageDTO(postPage.getTotalPages(),postPage.getTotalElements(),postPage.getSize(),page,postPage.getContent());
         return pageDTO;
     }
-
+    @Transactional
     public CommunityPost getPost(Long postId) {
         return communityPostingRepository.findByPostId(postId).orElseThrow();
     }
-
+    @Transactional
     public PageDTO getMyPost(HttpServletRequest request,int page) {
         Long userId = jwtTokenProvider.getUserId(request);
         PageRequest pageRequest = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "postId"));

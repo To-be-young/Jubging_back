@@ -21,7 +21,7 @@ public class PloggingRecords {
     private Long recordId;
 
     @Column(name = "user_id", nullable = false)
-    private String userId;
+    private Long userId;
 
     @Column(name = "date", nullable = false)
     private LocalDateTime date;

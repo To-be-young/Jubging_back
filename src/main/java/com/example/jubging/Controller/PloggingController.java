@@ -13,6 +13,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import java.awt.print.Pageable;
 
 @Slf4j
@@ -20,22 +22,21 @@ import java.awt.print.Pageable;
 @RestController
 @RequestMapping("/api/plogging")
 public class PloggingController {
-    private final PloggingRepository ploggingRepository;
     private final ResponseService responseService;
 
     private final RecordService recordService;
     // 플로깅 완료시 기록 저장
     @PostMapping("/finish")
-    public SingleResult<RecordDTO> finish(@RequestBody RecordDTO recordDTO){
+    public SingleResult<RecordDTO> finish(HttpServletRequest request, @RequestBody RecordDTO recordDTO){
         log.info("[플로깅기록]");
-        recordService.ploggingRecord(recordDTO);
+        recordService.ploggingRecord(request,recordDTO);
         return responseService.getSingleResult(recordDTO);
     }
     // 플로깅 기록 리스트 나열
     @GetMapping("/log_list")
-    public SingleResult <PageDTO> logList(@RequestParam("userId") String userId, @RequestParam(required = false,defaultValue = "0",value = "page")int page){
+    public SingleResult <PageDTO> logList(HttpServletRequest request, @RequestParam(required = false,defaultValue = "0",value = "page")int page){
         log.info("[플로깅기록 리스트]");
-        return responseService.getSingleResult(recordService.getPloggingList(userId,page));
+        return responseService.getSingleResult(recordService.getPloggingList(request,page));
     }
     // 플로깅 상세 경로
     @GetMapping("/log_pathway")

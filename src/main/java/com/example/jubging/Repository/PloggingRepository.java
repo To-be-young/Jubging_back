@@ -2,6 +2,7 @@ package com.example.jubging.Repository;
 
 import com.example.jubging.Model.PloggingRecords;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 
@@ -12,6 +13,7 @@ public interface PloggingRepository extends JpaRepository<PloggingRecords, Long>
 
     PloggingRecords findByRecordId(Long recordId);
 
-    Page<PloggingRecords> findByUserId(String UserId, Pageable pageable);
+    //Page<PloggingRecords> findByUserId(String UserId, Pageable pageable);
 
+    Page<PloggingRecords> findByUserId(Long userId, PageRequest pageRequest);
 }
