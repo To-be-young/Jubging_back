@@ -41,12 +41,8 @@ public class SignService {
         if (!passwordEncoder.matches(loginDTO.getPassword(), user.getPassword()))
             throw new CEmailLoginFailedException();
 
-        log.info("password 일치 여부 확인");
-        
         // AccessToken, RefreshToken 발급
         TokenDTO tokenDTO = jwtTokenProvider.createToken(user.getId(), user.getRoles());
-
-        log.info("토큰 발급");
 
         // Refresh Token 저장
         RefreshToken refreshToken = RefreshToken.builder()
@@ -58,9 +54,6 @@ public class SignService {
         return tokenDTO;
     }
 
-    // TODO
-    // 아이디 중복체크
-    // 중복시 회원가입 X
     @Transactional
     public void signUp(final SignUpDTO singUpDTO) {
         userRepository.save(singUpDTO.toEntity(passwordEncoder));
