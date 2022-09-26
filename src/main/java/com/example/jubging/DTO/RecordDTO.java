@@ -15,11 +15,11 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class RecordDTO {
+    private String userId;
     private LocalDateTime date;
     private double distance;
     private String activity_time;
     private List<PathwayDTO> pathway;
-
     public PloggingRecords toEntity(Long userId){
         return PloggingRecords.builder()
                 .userId(userId)
