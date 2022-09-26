@@ -9,8 +9,10 @@ import com.example.jubging.Service.response.ResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
 
 @Slf4j
 @RestController
@@ -58,5 +60,13 @@ public class UserController {
      * 이미지 불러오기
      */
 
-
+//    @PostMapping("/api/v1/users/images")
+//    public Map<String, Object> updateUserProfile(HttpServletRequest request , @PathVariable("userId") Long userId, @RequestBody MultipartFile file)  {
+//        ImageDto imageDto = updateProfile(file);
+//        if(imageDto.getContent()==null) {
+//            return imageDto.getMap();
+//        }
+//        userImageService.update(userService.findOneById(userId), (Image) imageDto.getContent());
+//        return imageDto.getMap();
+//    }
 }
