@@ -1,5 +1,7 @@
 package com.example.jubging.Controller;
 
+import com.example.jubging.DTO.EditUserInfoDTO;
+import com.example.jubging.DTO.UserInfoDTO;
 import com.example.jubging.DTO.UserPageDTO;
 import com.example.jubging.Response.SingleResult;
 import com.example.jubging.Service.UserService;
@@ -34,4 +36,27 @@ public class UserController {
         log.info("[마이페이지 기능]");
         return responseService.getSingleResult(userService.getUserPage(request));
     }
+
+
+    @PostMapping("/edit-user")
+    public SingleResult<String> editUserInfo(HttpServletRequest request, @RequestBody EditUserInfoDTO editUserInfoDTO){
+        userService.editUserInfo(request, editUserInfoDTO);
+        return responseService.getSingleResult("업데이트 되었습니다.");
+    }
+
+    /**
+     * 유저 정보 불러오기
+     * @param request
+     * @return
+     */
+    @GetMapping("")
+    public SingleResult<UserInfoDTO> getUserInfo(HttpServletRequest request){
+        return responseService.getSingleResult(userService.getUserInfo(request));
+    }
+
+    /** todo
+     * 이미지 불러오기
+     */
+
+
 }

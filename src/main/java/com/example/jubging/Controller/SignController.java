@@ -94,4 +94,5 @@ public class SignController {
         emailService.refreshVerifyEmailCode(email.get("email"));
         return responseService.getSingleResult("reissue Email");
     }
+
 }

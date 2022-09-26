@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 @Entity
 @NoArgsConstructor
 @AllArgsConstructor
-@Getter
+@Data
 @Table(name = "user")
 public class User implements UserDetails {
 //    자동으로 생성
