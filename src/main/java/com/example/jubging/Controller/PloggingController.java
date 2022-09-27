@@ -1,5 +1,6 @@
 package com.example.jubging.Controller;
 
+import com.example.jubging.DTO.PageDTO;
 import com.example.jubging.DTO.PathwayDTO;
 import com.example.jubging.DTO.RecordDTO;
 import com.example.jubging.Model.Pathway;
@@ -33,9 +34,9 @@ public class PloggingController {
     }
 
     @GetMapping("/log_list")
-    public ListResult <PloggingRecords> logList(HttpServletRequest request){
+    public SingleResult <PageDTO> logList(HttpServletRequest request, @RequestParam(required = false,defaultValue = "0",value = "page")int page){
         log.info("[플로깅기록 리스트]");
-        return responseService.getListResult(recordService.getPloggingList(request));
+        return responseService.getSingleResult(recordService.getPloggingList(request,page));
     }
 
     // 플로깅 상세 경로

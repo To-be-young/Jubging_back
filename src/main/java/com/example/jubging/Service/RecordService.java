@@ -71,8 +71,6 @@ public class RecordService {
         Page<PloggingRecords> ploggingPage = ploggingRepository.findByUserId(userId, pageRequest);
         PageDTO pageDTO = new PageDTO(ploggingPage.getTotalPages(),ploggingPage.getTotalElements(),ploggingPage.getSize(),page,ploggingPage.getContent());
         return pageDTO;
-
-        return ploggingRepository.findByUserId(userId);
     }
 
     // 플로깅 경로
