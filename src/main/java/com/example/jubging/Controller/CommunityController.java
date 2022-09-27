@@ -38,7 +38,7 @@ public class CommunityController {
         return responseService.getSingleResult(communityService.getPostList(page));
     }
     @GetMapping("/get-post")
-    public SingleResult<CommunityPost> getPost(@RequestParam("postId")Long postId){
+    public SingleResult<PostDTO> getPost(@RequestParam("postId")Long postId){
         log.info("[플로깅 모집 상세조회]");
         return responseService.getSingleResult(communityService.getPost(postId));
 

@@ -57,7 +57,6 @@ public class RecordService {
         recordDTO.getPathway().forEach(d->
                 pathwayRepository.save(d.toEntity(recordData))
                 );
-
     }
 
     // 플로깅 리스트
@@ -82,5 +81,6 @@ public class RecordService {
                 .collect(Collectors.toList());
         return  pathwayDTO;
     }
+
 
 }

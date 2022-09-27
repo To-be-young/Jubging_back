@@ -35,9 +35,6 @@ public class CommunityPost {
     // 한줄소개
     @Column(name = "content",nullable = false)
     private String content;
-    // 활동조건
-    @Column(name = "qualification",nullable = false)
-    private String qualification;
     // 집결 시간
     @Column(name="gatheringTime",nullable = false)
     private String gatheringTime;

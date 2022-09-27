@@ -2,10 +2,13 @@ package com.example.jubging.Service;
 
 import com.example.jubging.DTO.PageDTO;
 import com.example.jubging.DTO.PostDTO;
+import com.example.jubging.DTO.QualificationDTO;
 import com.example.jubging.Exception.CUserNotFoundException;
 import com.example.jubging.Model.CommunityPost;
+import com.example.jubging.Model.Qualification;
 import com.example.jubging.Model.User;
 import com.example.jubging.Repository.CommunityPostingRepository;
+import com.example.jubging.Repository.QualificationRepository;
 import com.example.jubging.Repository.UserRepository;
 import com.example.jubging.config.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
@@ -18,6 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -26,6 +30,7 @@ public class CommunityService {
     private final UserRepository userRepository;
     private final CommunityPostingRepository communityPostingRepository;
     private final JwtTokenProvider jwtTokenProvider;
+    private final QualificationRepository qualificationRepository;
 
     @Transactional
     public void posting(HttpServletRequest request, PostDTO postDTO){
@@ -33,7 +38,12 @@ public class CommunityService {
         User user = userRepository.findById(userId)
                 .orElseThrow(CUserNotFoundException::new);
         CommunityPost communityPost = postDTO.toEntity(user.getId());
+
         communityPostingRepository.save(communityPost);
+
+        postDTO.getQualification().forEach(d->
+                qualificationRepository.save(d.toEntity(communityPost))
+                );
     }
 
     @Transactional
@@ -52,8 +62,12 @@ public class CommunityService {
         return pageDTO;
     }
     @Transactional
-    public CommunityPost getPost(Long postId) {
-        return communityPostingRepository.findByPostId(postId).orElseThrow();
+    public PostDTO getPost(Long postId) {
+        CommunityPost communityPost = communityPostingRepository.findByPostId(postId).orElseThrow();
+        List<Qualification> qualification= qualificationRepository.getQualification(postId);
+        List<QualificationDTO> qualificationDTO = qualification.stream().map(h->new QualificationDTO(h.getInstruction())).collect(Collectors.toList());
+        User user = userRepository.findById(communityPost.getUserId()).orElseThrow();
+        return new PostDTO(user.getUserId(), communityPost.getTitle(), communityPost.getContent(),qualificationDTO,communityPost.getGatheringTime(), communityPost.getEndingTime(), communityPost.getGatheringPlace(), communityPost.getCapacity(), communityPost.getParticipant(), communityPost.getEtc(), communityPost.getPostImage(),communityPost.isRecruiting());
     }
     @Transactional
     public PageDTO getMyPost(HttpServletRequest request,int page) {
