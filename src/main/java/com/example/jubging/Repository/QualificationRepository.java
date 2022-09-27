@@ -1,6 +1,5 @@
 package com.example.jubging.Repository;
 
-import com.example.jubging.DTO.QualificationDTO;
 import com.example.jubging.Model.PloggingRecords;
 import com.example.jubging.Model.Qualification;
 import com.example.jubging.Model.QualificationId;

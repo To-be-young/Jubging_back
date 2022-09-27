@@ -1,19 +1,20 @@
 package com.example.jubging.DTO;
 
-import com.example.jubging.Model.CommunityPost;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
-import java.time.LocalDateTime;
 import java.util.List;
-
 @Getter
 @Setter
-@Builder
 @NoArgsConstructor
-public class PostDTO {
+public class PostResultDTO {
     private String userId;
     private String title;
     private String content;
+    // 활동 조건 갯수
+    private int qualificationCount;
     // 활동조건
     private List<String> qualification;
     // 집결 시간
@@ -33,27 +34,11 @@ public class PostDTO {
     // 모집중
     private boolean recruiting;
 
-
-    public CommunityPost toEntity(Long userId){
-        return CommunityPost.builder()
-                .userId(userId)
-                .title(title) // 임시로 넣은 값 나중에 시작시간 종료시간 구현하면 그떄 변경
-                .creationDate(LocalDateTime.now())
-                .content(content)
-                .gatheringTime(gatheringTime)
-                .capacity(capacity)
-                .gatheringPlace(gatheringPlace)
-                .endingTime(endingTime)
-                .etc(etc)
-                .postImage(postImage)
-                .recruiting(true)
-                .build();
-    }
-
-    public PostDTO(String userId, String title, String content, List<String> qualification, String gatheringTime, String endingTime, String gatheringPlace, int capacity, int participant, String etc, String postImage, boolean recruiting) {
+    public PostResultDTO(String userId, String title, String content, int qualificationCount, List<String> qualification, String gatheringTime, String endingTime, String gatheringPlace, int capacity, int participant, String etc, String postImage, boolean recruiting) {
         this.userId = userId;
         this.title = title;
         this.content = content;
+        this.qualificationCount = qualificationCount;
         this.qualification = qualification;
         this.gatheringTime = gatheringTime;
         this.endingTime = endingTime;
