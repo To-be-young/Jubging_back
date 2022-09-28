@@ -47,6 +47,9 @@ public class User implements UserDetails {
     @ColumnDefault("0.0")
     private double distance;
 
+    @OneToOne(mappedBy = "user")
+    private ImageInfo imageInfo;
+
     @ElementCollection
     @Builder.Default
     @Column(name = "user_roles")
