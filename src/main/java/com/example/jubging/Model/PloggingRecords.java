@@ -32,6 +32,9 @@ public class PloggingRecords {
     @Column(name = "activity_time", nullable = false)
     private String activityTime;
 
+    @Column(name="pace", nullable = false)
+    private String pace;
+
     public Long getRecordId() {
         return recordId;
     }

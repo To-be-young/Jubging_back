@@ -19,6 +19,7 @@ public class RecordDTO {
     private LocalDateTime date;
     private double distance;
     private String activity_time;
+    private String pace;
     private List<PathwayDTO> pathway;
     public PloggingRecords toEntity(Long userId){
         return PloggingRecords.builder()
@@ -26,6 +27,7 @@ public class RecordDTO {
                 .date(LocalDateTime.now()) // 임시로 넣은 값 나중에 시작시간 종료시간 구현하면 그떄 변경
                 .distance(distance)
                 .activityTime(activity_time)
+                .pace(pace)
                 .build();
     }
 

@@ -38,7 +38,7 @@ public class RecordService {
     private final JwtTokenProvider jwtTokenProvider;
 
     @Transactional
-    public void record(HttpServletRequest request, RecordDTO recordDTO) {
+    public PloggingRecords record(HttpServletRequest request, RecordDTO recordDTO) {
         Long userId = jwtTokenProvider.getUserId(request);
 
         // 플로깅 기록을 저장하려는 아이디가 유효한지 확인
@@ -57,6 +57,7 @@ public class RecordService {
         recordDTO.getPathway().forEach(d->
                 pathwayRepository.save(d.toEntity(recordData))
                 );
+        return recordData;
 
     }
 
