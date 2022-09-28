@@ -9,6 +9,7 @@ import com.example.jubging.Repository.UserRepository;
 import com.example.jubging.config.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,18 @@ public class UserService {
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
+
+    public User getUser(HttpServletRequest request){
+        String token = jwtTokenProvider.resolveToken(request);
+        Authentication authentication = jwtTokenProvider.getAuthentication(token);
+        User user = (User) authentication.getPrincipal();
+//        Long userId = Long.parseLong(this.getUserPk(token));
+//
+//        User user = userRepository.findById(userId)
+//                .orElseThrow(CUserNotFoundException::new);
+
+        return user;
+    }
 
     @Transactional
     public boolean checkEmailDuplicate(String userId){

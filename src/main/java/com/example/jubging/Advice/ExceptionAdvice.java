@@ -30,7 +30,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(DataIntegrityViolationException.class)
     public CommonResult singUpDuplicateUserIdException(Exception e){
         log.info("[회원가입 아이디 중복 오류 발생]");
-        return responseService.getFailResult(1000, "[BAD REQUEST] 회원가입 중복 오류 발생");
+        return responseService.getFailResult(1000, "[BAD REQUEST] 중복 오류발생");
     }
 
 //    회원가입 no value

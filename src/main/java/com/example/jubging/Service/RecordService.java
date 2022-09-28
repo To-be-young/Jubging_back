@@ -6,13 +6,13 @@ import com.example.jubging.Exception.CEmailLoginFailedException;
 import com.example.jubging.DTO.RecordDTO;
 import com.example.jubging.Exception.CUserNotFoundException;
 import com.example.jubging.Model.Pathway;
-import com.example.jubging.Model.Pathway;
 import com.example.jubging.Model.PloggingRecords;
 import com.example.jubging.Model.User;
 import com.example.jubging.Repository.PathwayRepository;
 import com.example.jubging.Repository.PloggingRepository;
 import com.example.jubging.Repository.UserRepository;
 import com.example.jubging.config.security.JwtTokenProvider;
+import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -23,7 +23,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Slf4j

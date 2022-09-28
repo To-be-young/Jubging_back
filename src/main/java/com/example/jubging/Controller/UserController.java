@@ -56,17 +56,4 @@ public class UserController {
         return responseService.getSingleResult(userService.getUserInfo(request));
     }
 
-    /** todo
-     * 이미지 불러오기
-     */
-
-//    @PostMapping("/api/v1/users/images")
-//    public Map<String, Object> updateUserProfile(HttpServletRequest request , @PathVariable("userId") Long userId, @RequestBody MultipartFile file)  {
-//        ImageDto imageDto = updateProfile(file);
-//        if(imageDto.getContent()==null) {
-//            return imageDto.getMap();
-//        }
-//        userImageService.update(userService.findOneById(userId), (Image) imageDto.getContent());
-//        return imageDto.getMap();
-//    }
 }

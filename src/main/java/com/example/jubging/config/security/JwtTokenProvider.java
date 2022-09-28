@@ -2,6 +2,9 @@ package com.example.jubging.config.security;
 
 import com.example.jubging.DTO.TokenDTO;
 import com.example.jubging.Exception.CAuthenticationEntryPointException;
+import com.example.jubging.Exception.CUserNotFoundException;
+import com.example.jubging.Model.User;
+import com.example.jubging.Repository.UserRepository;
 import com.example.jubging.Service.CustomUserDetailService;
 import io.jsonwebtoken.*;
 import io.jsonwebtoken.impl.Base64UrlCodec;
@@ -31,6 +34,7 @@ public class JwtTokenProvider {     // JWT 토큰을 생성 및 검증 모듈
     private String ROLES = "roles";
     private long accessTokenValidMillisecond = 60 * 60 * 1000L * 24 * 365 * 100; // 100년
     private long refreshTokenValidMillisecond = 14 * 24 * 60 * 60 * 1000L;      // 14 days
+    private final UserRepository userRepository;
 
     private final CustomUserDetailService userDetailsService;
 
@@ -82,7 +86,6 @@ public class JwtTokenProvider {     // JWT 토큰을 생성 및 검증 모듈
 
         UserDetails userDetails = userDetailsService.loadUserByUsername(claims.getSubject());
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
-
     }
 
     // Jwt 토큰 복호화해서 가져오기
@@ -109,6 +112,17 @@ public class JwtTokenProvider {     // JWT 토큰을 생성 및 검증 모듈
         Long userId = Long.parseLong(this.getUserPk(token));
 
         return userId;
+    }
+
+    public User getUser(HttpServletRequest request){
+        String token = this.resolveToken(request);
+        User user = (User) this.getAuthentication(token).getPrincipal();
+//        Long userId = Long.parseLong(this.getUserPk(token));
+//
+//        User user = userRepository.findById(userId)
+//                .orElseThrow(CUserNotFoundException::new);
+
+        return user;
     }
 
     // Jwt 토큰의 유쇼성 + 만료일자 확인
