@@ -62,14 +62,12 @@ public class UserService {
         Long userId = jwtTokenProvider.getUserId(request);
 
         String nickname = editUserInfoDTO.getNickname();
-        String phoneNumber = editUserInfoDTO.getPhoneNumber();
         String password = editUserInfoDTO.getPassword();
 
         User user = userRepository.findById(userId)
                 .orElseThrow(CUserNotFoundException::new);
 
         user.setNickname(nickname);
-        user.setPhoneNumber(phoneNumber);
         user.setPassword(passwordEncoder.encode(password));
 
         userRepository.save(user);

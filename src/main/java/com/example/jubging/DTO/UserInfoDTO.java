@@ -14,9 +14,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class UserInfoDTO {
     private String userId;
     private String nickname;
-    private String phoneNumber;
 
     public static UserInfoDTO getUserInfo(User user){
-        return new UserInfoDTO(user.getUserId(), user.getNickname(), user.getPhoneNumber());
+        return new UserInfoDTO(user.getUserId(), user.getNickname());
     }
 }

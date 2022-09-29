@@ -36,9 +36,6 @@ public class User implements UserDetails {
     @Column(name = "nickname", nullable = false)
     private String nickname;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
-
     @Column(name = "count")
     @ColumnDefault("0")
     private int count;
