@@ -1,23 +1,31 @@
 package com.example.jubging.DTO;
 
 import com.example.jubging.Model.CommunityPost;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.util.Date;
 import java.util.List;
 
 @Getter
 @Setter
 @Builder
 @NoArgsConstructor
+@AllArgsConstructor
 public class PostDTO {
     private String userId;
     private String title;
     private String content;
+
     // 활동조건
     private List<String> qualification;
+
     // 집결 시간
-    private String gatheringTime;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    private LocalDateTime gatheringTime;
+
     // 활동 시간
     private String endingTime;
     // 집결장소
@@ -48,20 +56,5 @@ public class PostDTO {
                 .postImage(postImage)
                 .recruiting(true)
                 .build();
-    }
-
-    public PostDTO(String userId, String title, String content, List<String> qualification, String gatheringTime, String endingTime, String gatheringPlace, int capacity, int participant, String etc, String postImage, boolean recruiting) {
-        this.userId = userId;
-        this.title = title;
-        this.content = content;
-        this.qualification = qualification;
-        this.gatheringTime = gatheringTime;
-        this.endingTime = endingTime;
-        this.gatheringPlace = gatheringPlace;
-        this.capacity = capacity;
-        this.participant = participant;
-        this.etc = etc;
-        this.postImage = postImage;
-        this.recruiting = recruiting;
     }
 }

@@ -37,7 +37,7 @@ public class CommunityPost {
     private String content;
     // 집결 시간
     @Column(name="gatheringTime",nullable = false)
-    private String gatheringTime;
+    private LocalDateTime gatheringTime;
     // 종료 시간
     @Column(name="endingTime",nullable = false)
     private String endingTime;

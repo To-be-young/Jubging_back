@@ -48,4 +48,10 @@ public class CommunityController {
         log.info("[내가 모집한 플로깅 모집 리스트]");
         return responseService.getSingleResult(communityService.getMyPost(request,page));
     }
+
+    @PostMapping("/update")
+    public void update(){
+        log.info("[플로깅 모집 업데이트]");
+        communityService.updateRecruiting();
+    }
 }

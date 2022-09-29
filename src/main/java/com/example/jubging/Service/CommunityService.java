@@ -20,6 +20,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.Date;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -45,6 +48,7 @@ public class CommunityService {
         postDTO.getQualification().forEach(d->
                 qualificationRepository.save( new Qualification(communityPost,d))
                 );
+        this.updateRecruiting();
         return communityPost;
     }
 
@@ -52,12 +56,14 @@ public class CommunityService {
     public CommunityPost delete(Long postId){
         CommunityPost communityPost = communityPostingRepository.findById(postId).orElseThrow(null);
         communityPostingRepository.delete(communityPost);
+        this.updateRecruiting();
         return communityPost;
     }
 
     // 플로깅 모집 리스트 조회
     @Transactional
     public PageDTO getPostList(int page){
+        this.updateRecruiting();
         PageRequest pageRequest = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "postId"));
         Page<CommunityPost> postPage =  communityPostingRepository.findAll(pageRequest);
         PageDTO pageDTO = new PageDTO(postPage.getTotalPages(),postPage.getTotalElements(),postPage.getSize(),page,postPage.getContent());
@@ -65,15 +71,17 @@ public class CommunityService {
     }
     @Transactional
     public PostResultDTO getPost(Long postId) {
+        this.updateRecruiting();
         CommunityPost communityPost = communityPostingRepository.findByPostId(postId).orElseThrow();
         List<Qualification> qualification= qualificationRepository.getQualification(postId);
         List<String> qualificationDTO = new ArrayList<String>();
         qualification.stream().map(h->qualificationDTO.add(h.getInstruction())).collect(Collectors.toList());
         User user = userRepository.findById(communityPost.getUserId()).orElseThrow();
-        return new PostResultDTO(user.getUserId(), communityPost.getTitle(), communityPost.getContent(), qualificationDTO.size(), qualificationDTO,communityPost.getGatheringTime(), communityPost.getEndingTime(), communityPost.getGatheringPlace(), communityPost.getCapacity(), communityPost.getParticipant(), communityPost.getEtc(), communityPost.getPostImage(),communityPost.isRecruiting());
+        return new PostResultDTO(user.getUserId(), communityPost.getTitle(), communityPost.getContent(), qualificationDTO.size(), qualificationDTO,communityPost.getGatheringTime().toString(), communityPost.getEndingTime(), communityPost.getGatheringPlace(), communityPost.getCapacity(), communityPost.getParticipant(), communityPost.getEtc(), communityPost.getPostImage(),communityPost.isRecruiting());
     }
     @Transactional
     public PageDTO getMyPost(HttpServletRequest request,int page) {
+        this.updateRecruiting();
         Long userId = jwtTokenProvider.getUserId(request);
         PageRequest pageRequest = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "postId"));
         Page<CommunityPost> postPage = communityPostingRepository.findByUserId(userId,pageRequest);
@@ -81,4 +89,15 @@ public class CommunityService {
         return pageDTO;
 
     }
+
+//    @Transactional
+//    public void updateRecruiting(){
+//        String formatedNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm:ss"));
+//        communityPostingRepository.updateRecruiting(LocalDateTime.now());
+//    }
+    @Transactional
+    public void updateRecruiting(){
+        Page<CommunityPost> communityPostingre
+    }
+
 }
