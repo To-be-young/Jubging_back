@@ -65,11 +65,13 @@ public class RecordService {
     @Transactional
     public PageDTO getPloggingList(HttpServletRequest request, int page){
         Long userId = jwtTokenProvider.getUserId(request);
+
         User user = userRepository.findById(userId)
                 .orElseThrow(CUserNotFoundException::new);
+
         PageRequest pageRequest = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "recordId"));
         Page<PloggingRecords> ploggingPage = ploggingRepository.findByUserId(userId, pageRequest);
-        PageDTO pageDTO = new PageDTO(ploggingPage.getTotalPages(),ploggingPage.getTotalElements(),ploggingPage.getSize(),page,ploggingPage.getContent());
+        PageDTO pageDTO = new PageDTO(ploggingPage.getTotalPages(), ploggingPage.getTotalElements(), ploggingPage.getSize(), page, ploggingPage.getContent());
         return pageDTO;
     }
 

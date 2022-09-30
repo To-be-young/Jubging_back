@@ -32,7 +32,6 @@ public class PostDTO {
     // 모집중
     private boolean recruiting;
 
-
     public CommunityPost toEntity(Long userId){
         return CommunityPost.builder()
                 .userId(userId)
