@@ -29,10 +29,6 @@ public class UserService {
         String token = jwtTokenProvider.resolveToken(request);
         Authentication authentication = jwtTokenProvider.getAuthentication(token);
         User user = (User) authentication.getPrincipal();
-//        Long userId = Long.parseLong(this.getUserPk(token));
-//
-//        User user = userRepository.findById(userId)
-//                .orElseThrow(CUserNotFoundException::new);
 
         return user;
     }
@@ -62,14 +58,12 @@ public class UserService {
         Long userId = jwtTokenProvider.getUserId(request);
 
         String nickname = editUserInfoDTO.getNickname();
-        String phoneNumber = editUserInfoDTO.getPhoneNumber();
         String password = editUserInfoDTO.getPassword();
 
         User user = userRepository.findById(userId)
                 .orElseThrow(CUserNotFoundException::new);
 
         user.setNickname(nickname);
-        user.setPhoneNumber(phoneNumber);
         user.setPassword(passwordEncoder.encode(password));
 
         userRepository.save(user);
@@ -83,5 +77,10 @@ public class UserService {
                 .orElseThrow(CUserNotFoundException::new);
 
         return UserInfoDTO.getUserInfo(user);
+    }
+
+    public String getUserNickname(HttpServletRequest request){
+        User user = this.getUser(request);
+        return user.getNickname();
     }
 }

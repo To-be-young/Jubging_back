@@ -42,7 +42,7 @@ public class SignController {
     /**
      * 회원가입 API
      * @param signUDTO
-     *      userId, password, nickname, phoneNumber를 인자로 받음
+     *      userId, password, nickname 인자로 받음
      */
     @PostMapping("/signup")
     public SingleResult<String> signUp(@RequestBody @Valid SignUpDTO signUDTO) {
