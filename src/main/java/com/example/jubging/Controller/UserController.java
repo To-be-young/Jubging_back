@@ -56,7 +56,10 @@ public class UserController {
 
     @GetMapping("/get-user-nick")
     public SingleResult<Map<String, String>> getUserNick(HttpServletRequest request){
-        Map<String, String> result = Map.of("nickname",userService.getUserNickname(request));
+        Map<String, String> result = Map.of(
+                "nickname",userService.getUserNickname(request),
+                "userId", userService.getUserId(request)
+        );
 
         return responseService.getSingleResult(result);
     }
