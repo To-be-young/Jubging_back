@@ -83,4 +83,9 @@ public class UserService {
         User user = this.getUser(request);
         return user.getNickname();
     }
+
+    public String getUserId(HttpServletRequest request){
+        User user = this.getUser(request);
+        return user.getUserId();
+    }
 }
