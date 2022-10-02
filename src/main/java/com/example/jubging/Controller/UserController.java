@@ -9,7 +9,6 @@ import com.example.jubging.Service.response.ResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
@@ -25,7 +24,6 @@ public class UserController {
     @PostMapping("/user-emails/exists")
     public SingleResult<Boolean> checkEmailDuplicate(@RequestParam("email") String email ){
         return responseService.getSingleResult(userService.checkEmailDuplicate(email));
-        // ResponseEntity.ok(userService.checkEmailDuplicate(userId));
     }
 
     @PostMapping("/user-nickname/exists")
@@ -56,17 +54,10 @@ public class UserController {
         return responseService.getSingleResult(userService.getUserInfo(request));
     }
 
-    /** todo
-     * 이미지 불러오기
-     */
+    @GetMapping("/get-user-nick")
+    public SingleResult<Map<String, String>> getUserNick(HttpServletRequest request){
+        Map<String, String> result = Map.of("nickname",userService.getUserNickname(request));
 
-//    @PostMapping("/api/v1/users/images")
-//    public Map<String, Object> updateUserProfile(HttpServletRequest request , @PathVariable("userId") Long userId, @RequestBody MultipartFile file)  {
-//        ImageDto imageDto = updateProfile(file);
-//        if(imageDto.getContent()==null) {
-//            return imageDto.getMap();
-//        }
-//        userImageService.update(userService.findOneById(userId), (Image) imageDto.getContent());
-//        return imageDto.getMap();
-//    }
+        return responseService.getSingleResult(result);
+    }
 }

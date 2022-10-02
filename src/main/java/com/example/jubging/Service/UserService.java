@@ -9,6 +9,7 @@ import com.example.jubging.Repository.UserRepository;
 import com.example.jubging.config.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,14 @@ public class UserService {
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
+
+    public User getUser(HttpServletRequest request){
+        String token = jwtTokenProvider.resolveToken(request);
+        Authentication authentication = jwtTokenProvider.getAuthentication(token);
+        User user = (User) authentication.getPrincipal();
+
+        return user;
+    }
 
     @Transactional
     public boolean checkEmailDuplicate(String userId){
@@ -49,14 +58,12 @@ public class UserService {
         Long userId = jwtTokenProvider.getUserId(request);
 
         String nickname = editUserInfoDTO.getNickname();
-        String phoneNumber = editUserInfoDTO.getPhoneNumber();
         String password = editUserInfoDTO.getPassword();
 
         User user = userRepository.findById(userId)
                 .orElseThrow(CUserNotFoundException::new);
 
         user.setNickname(nickname);
-        user.setPhoneNumber(phoneNumber);
         user.setPassword(passwordEncoder.encode(password));
 
         userRepository.save(user);
@@ -70,5 +77,15 @@ public class UserService {
                 .orElseThrow(CUserNotFoundException::new);
 
         return UserInfoDTO.getUserInfo(user);
+    }
+
+    public String getUserNickname(HttpServletRequest request){
+        User user = this.getUser(request);
+        return user.getNickname();
+    }
+
+    public String getUserId(HttpServletRequest request){
+        User user = this.getUser(request);
+        return user.getUserId();
     }
 }

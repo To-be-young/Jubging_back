@@ -18,13 +18,11 @@ public class PostDTO {
     private String userId;
     private String title;
     private String content;
-
     // 활동조건
     private List<String> qualification;
 
     // 집결 시간
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime gatheringTime;
+    private String gatheringTime;
 
     // 활동 시간
     private String endingTime;
@@ -42,11 +40,12 @@ public class PostDTO {
     private boolean recruiting;
 
 
-    public CommunityPost toEntity(Long userId){
+    public CommunityPost toEntity(Long userId,String nickname){
         return CommunityPost.builder()
                 .userId(userId)
                 .title(title) // 임시로 넣은 값 나중에 시작시간 종료시간 구현하면 그떄 변경
                 .creationDate(LocalDateTime.now())
+                .nickname(nickname)
                 .content(content)
                 .gatheringTime(gatheringTime)
                 .capacity(capacity)

@@ -11,6 +11,7 @@ import java.util.List;
 @NoArgsConstructor
 public class PostResultDTO {
     private String userId;
+    private String nickname;
     private String title;
     private String content;
     // 활동 조건 갯수
@@ -34,8 +35,9 @@ public class PostResultDTO {
     // 모집중
     private boolean recruiting;
 
-    public PostResultDTO(String userId, String title, String content, int qualificationCount, List<String> qualification, String gatheringTime, String endingTime, String gatheringPlace, int capacity, int participant, String etc, String postImage, boolean recruiting) {
+    public PostResultDTO(String userId, String ninckname,String title, String content, int qualificationCount, List<String> qualification, String gatheringTime, String endingTime, String gatheringPlace, int capacity, int participant, String etc, String postImage, boolean recruiting) {
         this.userId = userId;
+        this.nickname=ninckname;
         this.title = title;
         this.content = content;
         this.qualificationCount = qualificationCount;

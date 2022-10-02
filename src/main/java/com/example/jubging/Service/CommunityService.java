@@ -1,18 +1,20 @@
 package com.example.jubging.Service;
 
-import com.example.jubging.DTO.PageDTO;
-import com.example.jubging.DTO.PostDTO;
-import com.example.jubging.DTO.PostResultDTO;
+import com.example.jubging.DTO.*;
 import com.example.jubging.Exception.CUserNotFoundException;
+import com.example.jubging.Exception.CommunityCapacityException;
 import com.example.jubging.Model.CommunityPost;
+import com.example.jubging.Model.JoinMember;
 import com.example.jubging.Model.Qualification;
 import com.example.jubging.Model.User;
 import com.example.jubging.Repository.CommunityPostingRepository;
+import com.example.jubging.Repository.JoinMemberRepository;
 import com.example.jubging.Repository.QualificationRepository;
 import com.example.jubging.Repository.UserRepository;
 import com.example.jubging.config.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.mapping.Join;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -35,20 +37,20 @@ public class CommunityService {
     private final CommunityPostingRepository communityPostingRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final QualificationRepository qualificationRepository;
+    private final JoinMemberRepository joinMemberRepository;
 
     @Transactional
     public CommunityPost posting(HttpServletRequest request, PostDTO postDTO){
         Long userId = jwtTokenProvider.getUserId(request);
         User user = userRepository.findById(userId)
                 .orElseThrow(CUserNotFoundException::new);
-        CommunityPost communityPost = postDTO.toEntity(user.getId());
+        CommunityPost communityPost = postDTO.toEntity(user.getId(), user.getNickname());
 
         communityPostingRepository.save(communityPost);
 
         postDTO.getQualification().forEach(d->
                 qualificationRepository.save( new Qualification(communityPost,d))
                 );
-        this.updateRecruiting();
         return communityPost;
     }
 
@@ -56,32 +58,28 @@ public class CommunityService {
     public CommunityPost delete(Long postId){
         CommunityPost communityPost = communityPostingRepository.findById(postId).orElseThrow(null);
         communityPostingRepository.delete(communityPost);
-        this.updateRecruiting();
         return communityPost;
     }
 
     // 플로깅 모집 리스트 조회
     @Transactional
     public PageDTO getPostList(int page){
-        this.updateRecruiting();
         PageRequest pageRequest = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "postId"));
-        Page<CommunityPost> postPage =  communityPostingRepository.findAll(pageRequest);
+        Page<CommunityPost> postPage = communityPostingRepository.findAll(pageRequest);
         PageDTO pageDTO = new PageDTO(postPage.getTotalPages(),postPage.getTotalElements(),postPage.getSize(),page,postPage.getContent());
         return pageDTO;
     }
     @Transactional
     public PostResultDTO getPost(Long postId) {
-        this.updateRecruiting();
         CommunityPost communityPost = communityPostingRepository.findByPostId(postId).orElseThrow();
         List<Qualification> qualification= qualificationRepository.getQualification(postId);
         List<String> qualificationDTO = new ArrayList<String>();
         qualification.stream().map(h->qualificationDTO.add(h.getInstruction())).collect(Collectors.toList());
         User user = userRepository.findById(communityPost.getUserId()).orElseThrow();
-        return new PostResultDTO(user.getUserId(), communityPost.getTitle(), communityPost.getContent(), qualificationDTO.size(), qualificationDTO,communityPost.getGatheringTime().toString(), communityPost.getEndingTime(), communityPost.getGatheringPlace(), communityPost.getCapacity(), communityPost.getParticipant(), communityPost.getEtc(), communityPost.getPostImage(),communityPost.isRecruiting());
+        return new PostResultDTO(user.getUserId(), user.getNickname(),communityPost.getTitle(), communityPost.getContent(), qualificationDTO.size(), qualificationDTO,communityPost.getGatheringTime().toString(), communityPost.getEndingTime(), communityPost.getGatheringPlace(), communityPost.getCapacity(), communityPost.getParticipant(), communityPost.getEtc(), communityPost.getPostImage(),communityPost.isRecruiting());
     }
     @Transactional
     public PageDTO getMyPost(HttpServletRequest request,int page) {
-        this.updateRecruiting();
         Long userId = jwtTokenProvider.getUserId(request);
         PageRequest pageRequest = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "postId"));
         Page<CommunityPost> postPage = communityPostingRepository.findByUserId(userId,pageRequest);
@@ -95,9 +93,17 @@ public class CommunityService {
 //        String formatedNow = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd-HH:mm:ss"));
 //        communityPostingRepository.updateRecruiting(LocalDateTime.now());
 //    }
+
     @Transactional
-    public void updateRecruiting(){
-        Page<CommunityPost> communityPostingre
+    public JoinMember joinCommunity(HttpServletRequest request, Long postId){
+        Long userId = jwtTokenProvider.getUserId(request);
+        CommunityPost communityPost = communityPostingRepository.findByPostId(postId).orElseThrow();
+        if(communityPost.getCapacity()<=communityPost.getParticipant()){
+            throw new CommunityCapacityException();
+        }
+        communityPost.countParticipant();
+
+        return joinMemberRepository.save(new JoinMember(communityPost,userId));
     }
 
 }
