@@ -27,10 +27,10 @@ public class PloggingController {
     private final RecordService recordService;
     // 플로깅 완료시 기록 저장
     @PostMapping("/finish")
-    public SingleResult<PloggingRecords> finish(HttpServletRequest request, @RequestBody RecordDTO recordDTO){
+    public SingleResult<RecordDTO> finish(HttpServletRequest request, @RequestBody RecordDTO recordDTO){
         log.info("[플로깅기록]");
-
-        return responseService.getSingleResult(recordService.record(request, recordDTO));
+        recordService.record(request, recordDTO);
+        return responseService.getSingleResult(recordDTO);
     }
 
     @GetMapping("/log_list")
