@@ -1,5 +1,7 @@
 package com.example.jubging.Advice;
 
+import com.example.jubging.Exception.CAuthenticationEntryPointException;
+import com.example.jubging.Exception.CommunityCapacityException;
 import com.example.jubging.Exception.EmailValidCodeException;
 import com.example.jubging.Response.CommonResult;
 import com.example.jubging.Service.response.ResponseService;
@@ -23,6 +25,7 @@ public class ExceptionAdvice {
     @ExceptionHandler(Exception.class)
     public CommonResult defaultException(Exception e){
         log.info(String.valueOf(e));
+        e.printStackTrace();
         return responseService.getFailResult(500, "Unknown error");
     }
 
@@ -45,4 +48,17 @@ public class ExceptionAdvice {
         log.info("[이메일 인증 실패]");
         return responseService.getFailResult(1002, "[이메일 인증 실패] 이메일 인증 코드를 다시 확인해 주세요.");
     }
+
+    @ExceptionHandler(CommunityCapacityException.class)
+    public CommonResult communityCapacityException(Exception e){
+        log.info("[가입인원초과]");
+        return responseService.getFailResult(2001, "[이메일 인증 실패] 이메일 인증 코드를 다시 확인해 주세요.");
+    }
+
+    @ExceptionHandler(CAuthenticationEntryPointException.class)
+    public CommonResult AuthenticationEntryPointException(Exception e){
+        log.info("[인증오류]");
+        return responseService.getFailResult(000, "[인증오류]");
+    }
+
 }

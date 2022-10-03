@@ -35,10 +35,10 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                     .authorizeRequests()
                         .antMatchers(HttpMethod.POST, "/**/login", "/*/*/signup","/api/plogging/finish","/*/*/user-emails/exists",
-                                "/*/*/user-nickname/exists", "/api/sign/verifyCode","/*/community/*").permitAll()
+                                "/*/*/user-nickname/exists", "/api/sign/verifyCode").permitAll()
                         .antMatchers(HttpMethod.GET, "/api/sign/email").permitAll()
                         .antMatchers(HttpMethod.GET, "/api/user/user-page", "/api/user/**", "/api/image/**").authenticated()
-                        .antMatchers(HttpMethod.POST, "/api/image/**").authenticated()
+                        .antMatchers(HttpMethod.POST, "/api/image/**", "/api/community/posting").authenticated()
                         .anyRequest().permitAll()
 
 

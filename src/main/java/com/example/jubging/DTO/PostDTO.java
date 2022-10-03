@@ -15,7 +15,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class PostDTO {
-    private String userId;
     private String title;
     private String content;
     // 활동조건
