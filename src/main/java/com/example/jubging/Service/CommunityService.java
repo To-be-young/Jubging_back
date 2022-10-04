@@ -51,6 +51,7 @@ public class CommunityService {
         postDTO.getQualification().forEach(d->
                 qualificationRepository.save( new Qualification(communityPost,d))
                 );
+
         return communityPost;
     }
 

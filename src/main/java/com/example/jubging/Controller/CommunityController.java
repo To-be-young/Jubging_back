@@ -5,7 +5,6 @@ import com.example.jubging.DTO.PostDTO;
 import com.example.jubging.DTO.PostResultDTO;
 import com.example.jubging.Model.CommunityPost;
 import com.example.jubging.Model.JoinMember;
-import com.example.jubging.Response.ListResult;
 import com.example.jubging.Response.SingleResult;
 import com.example.jubging.Service.CommunityService;
 import com.example.jubging.Service.response.ResponseService;
@@ -14,7 +13,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.Optional;
 
 @Slf4j
 @RequiredArgsConstructor
