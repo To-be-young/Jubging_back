@@ -23,4 +23,5 @@ public interface CommunityPostingRepository extends JpaRepository<CommunityPost,
     @Modifying(clearAutomatically = true)
     @Query(value = "update CommunityPost communityPost set communityPost.recruiting = false where communityPost.gatheringTime <= current_timestamp ")
     int updateRecruiting(LocalDateTime now);
+
 }

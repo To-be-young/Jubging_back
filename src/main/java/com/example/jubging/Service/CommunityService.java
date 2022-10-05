@@ -14,7 +14,6 @@ import com.example.jubging.Repository.UserRepository;
 import com.example.jubging.config.security.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.hibernate.mapping.Join;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
@@ -22,9 +21,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.Date;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,6 +34,7 @@ public class CommunityService {
     private final JwtTokenProvider jwtTokenProvider;
     private final QualificationRepository qualificationRepository;
     private final JoinMemberRepository joinMemberRepository;
+    private final UserService userService;
 
     @Transactional
     public CommunityPost posting(HttpServletRequest request, PostDTO postDTO){
@@ -105,6 +102,26 @@ public class CommunityService {
         communityPost.countParticipant();
 
         return joinMemberRepository.save(new JoinMember(communityPost,userId));
+    }
+
+    @Transactional
+    public PageDTO getMyJoinCommunity(HttpServletRequest request, int page){
+        Long userId = jwtTokenProvider.getUserId(request);
+        PageRequest pageRequest = PageRequest.of(page, 10, Sort.by(Sort.Direction.DESC, "postId"));
+        Page<JoinMember> postPage = joinMemberRepository.findJoinMembersByUserId(userId, pageRequest);
+        PageDTO pageDTO = new PageDTO(postPage.getTotalPages(),postPage.getTotalElements(),postPage.getSize(),page,postPage.getContent());
+        return pageDTO;
+    }
+
+    @Transactional
+    public List<ResultJoinMemberDTO> getMyCommunityJoinMember(HttpServletRequest request, Long postId){
+        Long userId = jwtTokenProvider.getUserId(request);
+        if(userId!=(communityPostingRepository.findByPostId(postId).orElseThrow().getUserId())){
+            throw new CUserNotFoundException();
+        }
+        List<JoinMember> joinMember = joinMemberRepository.findJoinMembersByPostId_PostId(postId);
+        List<ResultJoinMemberDTO> joinMemberDTO= joinMember.stream().map(h->new ResultJoinMemberDTO(userRepository.findById(h.getUserId()).orElseThrow().getUserId(),userRepository.findById(h.getUserId()).orElseThrow().getNickname())).collect(Collectors.toList());
+        return joinMemberDTO;
     }
 
 }

@@ -1,8 +1,6 @@
 package com.example.jubging.Controller;
 
-import com.example.jubging.DTO.PageDTO;
-import com.example.jubging.DTO.PostDTO;
-import com.example.jubging.DTO.PostResultDTO;
+import com.example.jubging.DTO.*;
 import com.example.jubging.Model.CommunityPost;
 import com.example.jubging.Model.JoinMember;
 import com.example.jubging.Response.SingleResult;
@@ -58,5 +56,15 @@ public class CommunityController {
     public SingleResult<JoinMember> joinCommunity(HttpServletRequest request, @RequestParam("postId")Long postId) {
         log.info("[플로깅 참가]");
         return responseService.getSingleResult(communityService.joinCommunity(request,postId));
+    }
+    @GetMapping("/get-myJoinCommunity")
+    public SingleResult<PageDTO>getMyJoinCommunity(HttpServletRequest request, @RequestParam(required = false, defaultValue = "0", value = "page") int page){
+        log.info(("[내가 참여한 플로깅 리스트]"));
+        return responseService.getSingleResult(communityService.getMyJoinCommunity(request,page));
+    }
+    @GetMapping("/get-myCommunityJoinMember")
+    public ListResult<ResultJoinMemberDTO> getMyCommunityJoinMember(HttpServletRequest request, @RequestParam("postId")Long postId){
+        log.info("[내가 모집한 플로깅 참가 멤버조회]");
+        return responseService.getListResult(communityService.getMyCommunityJoinMember(request,postId));
     }
 }
