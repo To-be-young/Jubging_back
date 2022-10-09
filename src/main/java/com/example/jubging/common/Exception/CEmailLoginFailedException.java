@@ -1,4 +1,4 @@
-package com.example.jubging.Exception;
+package com.example.jubging.common.Exception;
 
 // 로그인 예외처리
 public class CEmailLoginFailedException extends RuntimeException {

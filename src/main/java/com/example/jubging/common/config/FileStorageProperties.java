@@ -1,4 +1,4 @@
-package com.example.jubging.config;
+package com.example.jubging.common.config;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 

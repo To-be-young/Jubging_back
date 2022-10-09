@@ -1,11 +1,11 @@
 package com.example.jubging.Service;
 
-import com.example.jubging.Exception.FileStorageException;
-import com.example.jubging.Exception.MyFileNotFoundException;
+import com.example.jubging.common.Exception.FileStorageException;
+import com.example.jubging.common.Exception.MyFileNotFoundException;
 import com.example.jubging.Model.ImageInfo;
 import com.example.jubging.Model.User;
 import com.example.jubging.Repository.ImageRepository;
-import com.example.jubging.config.FileStorageProperties;
+import com.example.jubging.common.config.FileStorageProperties;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;

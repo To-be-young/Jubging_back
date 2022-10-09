@@ -1,4 +1,4 @@
-package com.example.jubging.DTO;
+package com.example.jubging.DTO.user;
 
 import com.example.jubging.Model.User;
 import lombok.AllArgsConstructor;

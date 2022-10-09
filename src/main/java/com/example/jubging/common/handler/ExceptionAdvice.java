@@ -1,9 +1,9 @@
-package com.example.jubging.Advice;
+package com.example.jubging.common.handler;
 
-import com.example.jubging.Exception.CAuthenticationEntryPointException;
-import com.example.jubging.Exception.CommunityCapacityException;
-import com.example.jubging.Exception.EmailValidCodeException;
-import com.example.jubging.Response.CommonResult;
+import com.example.jubging.common.Exception.CAuthenticationEntryPointException;
+import com.example.jubging.common.Exception.CommunityCapacityException;
+import com.example.jubging.common.Exception.EmailValidCodeException;
+import com.example.jubging.DTO.Response.CommonResult;
 import com.example.jubging.Service.response.ResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

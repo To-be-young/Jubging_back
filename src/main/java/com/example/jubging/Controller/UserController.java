@@ -1,9 +1,9 @@
 package com.example.jubging.Controller;
 
 import com.example.jubging.DTO.EditUserInfoDTO;
-import com.example.jubging.DTO.UserInfoDTO;
-import com.example.jubging.DTO.UserPageDTO;
-import com.example.jubging.Response.SingleResult;
+import com.example.jubging.DTO.user.UserInfoDTO;
+import com.example.jubging.DTO.user.UserPageDTO;
+import com.example.jubging.DTO.Response.SingleResult;
 import com.example.jubging.Service.UserService;
 import com.example.jubging.Service.response.ResponseService;
 import lombok.RequiredArgsConstructor;

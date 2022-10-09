@@ -1,5 +1,6 @@
-package com.example.jubging.config.security;
+package com.example.jubging.common.config.security;
 
+import com.example.jubging.auth.JwtTokenProvider;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
