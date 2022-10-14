@@ -6,6 +6,7 @@ import com.example.jubging.DTO.TokenDTO;
 import com.example.jubging.DTO.SignUpDTO;
 import com.example.jubging.Service.AuthService;
 import com.example.jubging.Service.EmailService;
+import com.example.jubging.Service.SignService;
 import com.example.jubging.common.Exception.EmailValidCodeException;
 import com.example.jubging.DTO.Response.SingleResult;
 import com.example.jubging.Service.response.ResponseService;
@@ -24,6 +25,7 @@ public class SignController {
     private final ResponseService responseService;
     private final EmailService emailService;
     private final AuthService authService;
+    private final SignService signService;
 
     /**
      * 로그인 api
@@ -43,15 +45,15 @@ public class SignController {
 
     /**
      * 회원가입 API
-     * @param signUDTO
+     * @param signUpDTO
      *      userId, password, nickname 인자로 받음
      */
     @PostMapping("/signup")
-    public SingleResult<String> signUp(@RequestBody @Valid SignUpDTO signUDTO) {
+    public SingleResult<String> signUp(@RequestBody @Valid SignUpDTO signUpDTO) {
         log.info("[회원가입]");
-//        signService.signUp(signUDTO);
-        authService.signup(signUDTO);
-        return responseService.getSingleResult(signUDTO.getUserId());
+        signService.signUp(signUpDTO);
+//        authService.signup(signUpDTO);
+        return responseService.getSingleResult(signUpDTO.getUserId());
     }
 
     /**

@@ -33,7 +33,7 @@ public class AuthServiceImpl implements AuthService{
     @Override
     @Transactional
     public void signup(SignUpDTO signUpDTO) {
-        Optional<User> findUser = userRepository.findByUserIdOrnOrNickname(signUpDTO.getUserId(), signUpDTO.getNickname());
+        Optional<User> findUser = userRepository.findByUserIdOrNickname(signUpDTO.getUserId(), signUpDTO.getNickname());
         if (findUser != null){
             if (findUser.get().getUserId() == signUpDTO.getUserId()){
                 throw new EmailDuplicatedException();
