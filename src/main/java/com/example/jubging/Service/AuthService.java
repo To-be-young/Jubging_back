@@ -22,4 +22,14 @@ public interface AuthService {
      */
     TokenDTO loginUser(LoginDTO loginDTO);
 
+    // todo
+    // 비밀번호 찾기
+    // 이메일 중복 찾기
+    // 닉네밍 중복 찾기
+    boolean checkEmailDuplicate(String email);
+
+    boolean checkNicknameDuplicate(String nickname);
+
+    void resetPassword();
+
 }

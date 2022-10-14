@@ -26,6 +26,7 @@ public class AuthServiceImpl implements AuthService{
     private final JwtTokenProvider jwtTokenProvider;
     private final TokenRepository tokenRepository;
 
+    // todo
     @Override
     @Transactional
     public void signup(SignUpDTO signUpDTO) {
@@ -48,12 +49,6 @@ public class AuthServiceImpl implements AuthService{
         User user = userRepository.findByUserId(loginDTO.getUserId())
                 .orElseThrow(CEmailLoginFailedException::new);
 
-        log.info("user id: "+user.getUserId());
-        log.info("dto user id: "+loginDTO.getUserId());
-
-        log.info("DTO pwd: "+loginDTO.getPassword());
-        log.info("user pwd: "+user.getPassword());
-
         // 회원 패스워드 일치 여부 확인
         if (!passwordEncoder.matches(loginDTO.getPassword(), user.getPassword()))
             throw new CEmailLoginFailedException();
@@ -69,5 +64,19 @@ public class AuthServiceImpl implements AuthService{
         tokenRepository.save(refreshToken);
 
         return tokenDTO;
+    }
+
+    @Override
+    public boolean checkEmailDuplicate(String email) {
+        return userRepository.existsByUserId(email);
+    }
+
+    @Override
+    public boolean checkNicknameDuplicate(String nickname) {
+        return userRepository.existsByNickname(nickname);
+    }
+
+    @Override
+    public void resetPassword() {
     }
 }
