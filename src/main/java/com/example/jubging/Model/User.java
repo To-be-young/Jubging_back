@@ -52,6 +52,10 @@ public class User implements UserDetails {
     @Column(name = "user_roles")
     private List<String> roles = new ArrayList<>();
 
+    @Column(name = "plogging_time")
+    @ColumnDefault("0")
+    private long ploggingTime;
+
     public void updateUserId(String userId) {
         this.userId = userId;
     }
@@ -110,4 +114,5 @@ public class User implements UserDetails {
         count++;
         return true;
     }
+
 }

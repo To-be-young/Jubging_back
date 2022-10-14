@@ -12,9 +12,10 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UserPageDTO {
     private int count;
+    private long activityTime;
     private Double distance;
 
     public static UserPageDTO getUserPage(User user){
-        return new UserPageDTO(user.getCount(), user.getDistance());
+        return new UserPageDTO(user.getCount(), user.getPloggingTime(), user.getDistance());
     }
 }

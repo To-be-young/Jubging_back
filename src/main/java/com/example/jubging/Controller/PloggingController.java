@@ -7,6 +7,7 @@ import com.example.jubging.DTO.Response.ListResult;
 import com.example.jubging.DTO.Response.SingleResult;
 import com.example.jubging.Repository.PloggingRepository;
 import com.example.jubging.Service.RecordService;
+import com.example.jubging.Service.UserService;
 import com.example.jubging.Service.response.ResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 public class PloggingController {
     private final PloggingRepository ploggingRepository;
     private final ResponseService responseService;
+    private final UserService userService;
 
     private final RecordService recordService;
     // 플로깅 완료시 기록 저장
@@ -28,6 +30,7 @@ public class PloggingController {
     public SingleResult<RecordDTO> finish(HttpServletRequest request, @RequestBody RecordDTO recordDTO){
         log.info("[플로깅기록]");
         recordService.record(request, recordDTO);
+        userService.addPloggingTime(request, recordDTO.getActivity_time());
         return responseService.getSingleResult(recordDTO);
     }
 

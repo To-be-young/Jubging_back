@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 
 @Slf4j
 @Service
@@ -87,5 +88,17 @@ public class UserService {
     public String getUserId(HttpServletRequest request){
         User user = this.getUser(request);
         return user.getUserId();
+    }
+
+    public void addPloggingTime(HttpServletRequest request, String activityTime){
+        User user = this.getUser(request);
+        String[] times = activityTime.split(":");
+        int[] values = Arrays.stream(times)
+                .mapToInt(Integer::parseInt)
+                .toArray();
+        long userActivityTime = user.getPloggingTime()+Long.valueOf(values[0]);
+
+        user.setPloggingTime(userActivityTime);
+        userRepository.save(user);
     }
 }
