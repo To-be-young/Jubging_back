@@ -9,8 +9,11 @@ import com.example.jubging.Repository.TokenRepository;
 import com.example.jubging.Repository.UserRepository;
 import com.example.jubging.auth.JwtTokenProvider;
 import com.example.jubging.common.Exception.CEmailLoginFailedException;
+import com.example.jubging.common.Exception.EmailDuplicatedException;
+import com.example.jubging.common.Exception.NicknameDuplicaitedException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import net.bytebuddy.implementation.bytecode.Throw;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,9 +36,9 @@ public class AuthServiceImpl implements AuthService{
         Optional<User> findUser = userRepository.findByUserIdOrnOrNickname(signUpDTO.getUserId(), signUpDTO.getNickname());
         if (findUser != null){
             if (findUser.get().getUserId() == signUpDTO.getUserId()){
-                // Throw userId 중복
+                throw new EmailDuplicatedException();
             } else {
-                // Throw nickname 중복
+                throw  new NicknameDuplicaitedException();
             }
         }
 
