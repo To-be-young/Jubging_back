@@ -1,10 +1,10 @@
 package com.example.jubging.Controller;
 
 import com.example.jubging.Model.User;
-import com.example.jubging.Response.UploadFileResponse;
+import com.example.jubging.DTO.Response.UploadFileResponse;
 import com.example.jubging.Service.FileStorageService;
 import com.example.jubging.Service.UserService;
-import com.example.jubging.config.security.JwtTokenProvider;
+import com.example.jubging.auth.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.io.Resource;

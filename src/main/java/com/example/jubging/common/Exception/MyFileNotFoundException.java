@@ -1,4 +1,4 @@
-package com.example.jubging.Exception;
+package com.example.jubging.common.Exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

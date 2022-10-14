@@ -3,7 +3,7 @@ package com.example.jubging.Controller;
 import com.example.jubging.DTO.*;
 import com.example.jubging.Model.CommunityPost;
 import com.example.jubging.Model.JoinMember;
-import com.example.jubging.Response.SingleResult;
+import com.example.jubging.DTO.Response.SingleResult;
 import com.example.jubging.Service.CommunityService;
 import com.example.jubging.Service.response.ResponseService;
 import lombok.RequiredArgsConstructor;

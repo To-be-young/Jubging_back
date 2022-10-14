@@ -1,8 +1,7 @@
-package com.example.jubging.config.security;
+package com.example.jubging.auth;
 
 import com.example.jubging.DTO.TokenDTO;
-import com.example.jubging.Exception.CAuthenticationEntryPointException;
-import com.example.jubging.Exception.CUserNotFoundException;
+import com.example.jubging.common.Exception.CAuthenticationEntryPointException;
 import com.example.jubging.Model.User;
 import com.example.jubging.Repository.UserRepository;
 import com.example.jubging.Service.CustomUserDetailService;

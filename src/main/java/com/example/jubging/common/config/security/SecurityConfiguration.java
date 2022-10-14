@@ -1,5 +1,6 @@
-package com.example.jubging.config.security;
+package com.example.jubging.common.config.security;
 
+import com.example.jubging.auth.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

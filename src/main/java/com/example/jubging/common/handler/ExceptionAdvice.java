@@ -1,9 +1,7 @@
-package com.example.jubging.Advice;
+package com.example.jubging.common.handler;
 
-import com.example.jubging.Exception.CAuthenticationEntryPointException;
-import com.example.jubging.Exception.CommunityCapacityException;
-import com.example.jubging.Exception.EmailValidCodeException;
-import com.example.jubging.Response.CommonResult;
+import com.example.jubging.common.Exception.*;
+import com.example.jubging.DTO.Response.CommonResult;
 import com.example.jubging.Service.response.ResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -56,9 +54,19 @@ public class ExceptionAdvice {
     }
 
     @ExceptionHandler(CAuthenticationEntryPointException.class)
-    public CommonResult AuthenticationEntryPointException(Exception e){
+    public CommonResult authenticationEntryPointException(Exception e){
         log.info("[인증오류]");
         return responseService.getFailResult(000, "[인증오류]");
+    }
+
+    @ExceptionHandler(EmailDuplicatedException.class)
+    public CommonResult emailDuplicatedException(Exception e){
+        return responseService.getFailResult(1003, "[이메일 중복 오류]");
+    }
+
+    @ExceptionHandler(NicknameDuplicaitedException.class)
+    public CommonResult nicknameDuplicaitedException(Exception e){
+        return responseService.getFailResult(1004, "[닉네임 중복오류]");
     }
 
 }

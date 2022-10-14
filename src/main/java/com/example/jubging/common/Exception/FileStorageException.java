@@ -1,4 +1,4 @@
-package com.example.jubging.Exception;
+package com.example.jubging.common.Exception;
 
 public class FileStorageException extends RuntimeException{
     public FileStorageException(String message) {

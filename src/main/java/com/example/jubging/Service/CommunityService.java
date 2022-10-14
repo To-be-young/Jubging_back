@@ -1,8 +1,8 @@
 package com.example.jubging.Service;
 
 import com.example.jubging.DTO.*;
-import com.example.jubging.Exception.CUserNotFoundException;
-import com.example.jubging.Exception.CommunityCapacityException;
+import com.example.jubging.common.Exception.CUserNotFoundException;
+import com.example.jubging.common.Exception.CommunityCapacityException;
 import com.example.jubging.Model.CommunityPost;
 import com.example.jubging.Model.JoinMember;
 import com.example.jubging.Model.Qualification;
@@ -11,7 +11,7 @@ import com.example.jubging.Repository.CommunityPostingRepository;
 import com.example.jubging.Repository.JoinMemberRepository;
 import com.example.jubging.Repository.QualificationRepository;
 import com.example.jubging.Repository.UserRepository;
-import com.example.jubging.config.security.JwtTokenProvider;
+import com.example.jubging.auth.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;

@@ -1,11 +1,10 @@
-package com.example.jubging.DTO;
+package com.example.jubging.DTO.user;
 
 import com.example.jubging.Model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @AllArgsConstructor
 @NoArgsConstructor

@@ -1,4 +1,4 @@
-package com.example.jubging.Response;
+package com.example.jubging.DTO.Response;
 
 import lombok.Data;
 import lombok.Getter;

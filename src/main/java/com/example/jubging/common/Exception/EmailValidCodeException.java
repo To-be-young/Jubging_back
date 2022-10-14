@@ -1,4 +1,4 @@
-package com.example.jubging.Exception;
+package com.example.jubging.common.Exception;
 
 public class EmailValidCodeException  extends RuntimeException{
     public EmailValidCodeException(String message, Throwable cause) {

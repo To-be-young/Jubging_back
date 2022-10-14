@@ -1,12 +1,12 @@
 package com.example.jubging.Service;
 
 import com.example.jubging.DTO.EditUserInfoDTO;
-import com.example.jubging.DTO.UserInfoDTO;
-import com.example.jubging.Exception.CUserNotFoundException;
-import com.example.jubging.DTO.UserPageDTO;
+import com.example.jubging.DTO.user.UserInfoDTO;
+import com.example.jubging.common.Exception.CUserNotFoundException;
+import com.example.jubging.DTO.user.UserPageDTO;
 import com.example.jubging.Model.User;
 import com.example.jubging.Repository.UserRepository;
-import com.example.jubging.config.security.JwtTokenProvider;
+import com.example.jubging.auth.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;

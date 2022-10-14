@@ -4,10 +4,10 @@ import com.example.jubging.DTO.EmailVerifyDTO;
 import com.example.jubging.DTO.LoginDTO;
 import com.example.jubging.DTO.TokenDTO;
 import com.example.jubging.DTO.SignUpDTO;
-import com.example.jubging.Exception.EmailValidCodeException;
-import com.example.jubging.Response.SingleResult;
+import com.example.jubging.Service.AuthService;
 import com.example.jubging.Service.EmailService;
-import com.example.jubging.Service.SignService;
+import com.example.jubging.common.Exception.EmailValidCodeException;
+import com.example.jubging.DTO.Response.SingleResult;
 import com.example.jubging.Service.response.ResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,9 +21,9 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/sign")
 public class SignController {
-    private final SignService signService;
     private final ResponseService responseService;
     private final EmailService emailService;
+    private final AuthService authService;
 
     /**
      * 로그인 api
@@ -35,7 +35,9 @@ public class SignController {
     @PostMapping("/login")
     public SingleResult<TokenDTO> login(@RequestBody LoginDTO loginDTO) {
         log.info("[login 요청]");
-        TokenDTO token = signService.login(loginDTO);
+
+        TokenDTO token = authService.loginUser(loginDTO);
+
         return responseService.getSingleResult(token);
     }
 
@@ -47,7 +49,8 @@ public class SignController {
     @PostMapping("/signup")
     public SingleResult<String> signUp(@RequestBody @Valid SignUpDTO signUDTO) {
         log.info("[회원가입]");
-        signService.signUp(signUDTO);
+//        signService.signUp(signUDTO);
+        authService.signup(signUDTO);
         return responseService.getSingleResult(signUDTO.getUserId());
     }
 
