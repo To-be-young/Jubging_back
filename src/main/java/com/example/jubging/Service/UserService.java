@@ -101,4 +101,15 @@ public class UserService {
         user.setPloggingTime(userActivityTime);
         userRepository.save(user);
     }
+
+    public void addDistance(HttpServletRequest request, double distance){
+        User user = this.getUser(request);
+
+        double sumDistance = user.getDistance() + distance;
+        // 소수점 두자리수 이하 삭제
+        sumDistance = Math.round(sumDistance * 100) / 100.0;
+        log.info("sum Distance => " + sumDistance);
+        user.setDistance(sumDistance);
+        userRepository.save(user);
+    }
 }

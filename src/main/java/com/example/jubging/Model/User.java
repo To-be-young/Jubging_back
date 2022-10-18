@@ -104,12 +104,6 @@ public class User implements UserDetails {
     }
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    public boolean AddDistance(double newDistance) {
-        distance +=newDistance;
-        return true;
-    }
-
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public boolean AddCount() {
         count++;
         return true;

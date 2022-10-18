@@ -34,23 +34,17 @@ public class RecordService {
     private final UserRepository userRepository;
     private final PathwayRepository pathwayRepository;
     private final JwtTokenProvider jwtTokenProvider;
+    private final UserService userService;
 
     @Transactional
     public void record(HttpServletRequest request, RecordDTO recordDTO) {
         Long userId = jwtTokenProvider.getUserId(request);
 
-        // 플로깅 기록을 저장하려는 아이디가 유효한지 확인
-        User user = userRepository.findById(userId)
-                .orElseThrow(CEmailLoginFailedException::new);
-
-        // user 테이블의 count와 distance 증가
-        user.AddCount();
-        user.AddDistance(recordDTO.getDistance());
-
+        // 유저 distance 추가
+        userService.addDistance(request, recordDTO.getDistance());
         //플로깅 기록저장
         PloggingRecords recordData = recordDTO.toEntity(userId);
         ploggingRepository.save(recordData);
-
         //플로깅 경로저장
         recordDTO.getPathway().forEach(d->
                 pathwayRepository.save(d.toEntity(recordData))
@@ -79,6 +73,7 @@ public class RecordService {
                 .collect(Collectors.toList());
         return  pathwayDTO;
     }
+
 
 
 }
