@@ -1,5 +1,6 @@
-package com.example.jubging.config.security;
+package com.example.jubging.common.config.security;
 
+import com.example.jubging.auth.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -34,9 +35,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
                 .and()
                     .authorizeRequests()
-                        .antMatchers(HttpMethod.POST, "/**/login", "/*/*/signup","/api/plogging/finish","/*/*/user-emails/exists","/*/*/user-nickname/exists", "/api/sign/verifyCode","/*/community/*").permitAll()
-                        .antMatchers(HttpMethod.GET, "/api/sign/email").permitAll()
-                        .antMatchers(HttpMethod.GET, "/api/user/user-page").authenticated()
+                        .antMatchers(HttpMethod.POST, "/**/login", "/*/*/signup","/api/plogging/finish","/*/*/user-emails/exists",
+                                "/*/*/user-nickname/exists", "/api/sign/verifyCode").permitAll()
+                        .antMatchers(HttpMethod.GET, "/api/sign/email", "/api-docs", "/swagger-ui-custom.html").permitAll()
+                        .antMatchers(HttpMethod.GET, "/api/user/user-page", "/api/user/**", "/api/image/**").authenticated()
+                        .antMatchers(HttpMethod.POST, "/api/image/**", "/api/community/posting").authenticated()
                         .anyRequest().permitAll()
 
 

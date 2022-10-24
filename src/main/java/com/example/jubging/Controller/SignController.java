@@ -4,10 +4,11 @@ import com.example.jubging.DTO.EmailVerifyDTO;
 import com.example.jubging.DTO.LoginDTO;
 import com.example.jubging.DTO.TokenDTO;
 import com.example.jubging.DTO.SignUpDTO;
-import com.example.jubging.Exception.EmailValidCodeException;
-import com.example.jubging.Response.SingleResult;
+import com.example.jubging.Service.AuthService;
 import com.example.jubging.Service.EmailService;
 import com.example.jubging.Service.SignService;
+import com.example.jubging.common.Exception.EmailValidCodeException;
+import com.example.jubging.DTO.Response.SingleResult;
 import com.example.jubging.Service.response.ResponseService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -21,9 +22,10 @@ import java.util.Map;
 @RestController
 @RequestMapping("/api/sign")
 public class SignController {
-    private final SignService signService;
     private final ResponseService responseService;
     private final EmailService emailService;
+    private final AuthService authService;
+    private final SignService signService;
 
     /**
      * 로그인 api
@@ -35,20 +37,23 @@ public class SignController {
     @PostMapping("/login")
     public SingleResult<TokenDTO> login(@RequestBody LoginDTO loginDTO) {
         log.info("[login 요청]");
-        TokenDTO token = signService.login(loginDTO);
+
+        TokenDTO token = authService.loginUser(loginDTO);
+
         return responseService.getSingleResult(token);
     }
 
     /**
      * 회원가입 API
-     * @param signUDTO
-     *      userId, password, nickname, phoneNumber를 인자로 받음
+     * @param signUpDTO
+     *      userId, password, nickname 인자로 받음
      */
     @PostMapping("/signup")
-    public SingleResult<String> signUp(@RequestBody @Valid SignUpDTO signUDTO) {
+    public SingleResult<String> signUp(@RequestBody @Valid SignUpDTO signUpDTO) {
         log.info("[회원가입]");
-        signService.signUp(signUDTO);
-        return responseService.getSingleResult(signUDTO.getUserId());
+        signService.signUp(signUpDTO);
+//        authService.signup(signUpDTO);
+        return responseService.getSingleResult(signUpDTO.getUserId());
     }
 
     /**

@@ -1,11 +1,10 @@
-package com.example.jubging.DTO;
+package com.example.jubging.DTO.user;
 
 import com.example.jubging.Model.User;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -14,9 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 public class UserInfoDTO {
     private String userId;
     private String nickname;
-    private String phoneNumber;
 
     public static UserInfoDTO getUserInfo(User user){
-        return new UserInfoDTO(user.getUserId(), user.getNickname(), user.getPhoneNumber());
+        return new UserInfoDTO(user.getUserId(), user.getNickname());
     }
 }

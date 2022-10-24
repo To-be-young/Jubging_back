@@ -11,6 +11,5 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 public class EditUserInfoDTO {
     private String nickname;
-    private String phoneNumber;
     private String password;
 }

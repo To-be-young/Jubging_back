@@ -1,5 +1,6 @@
 package com.example.jubging.Model;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,6 +11,7 @@ import javax.persistence.*;
 @Table(name = "refresh_token")
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class RefreshToken {
 
     @Id

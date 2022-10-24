@@ -1,20 +1,22 @@
 package com.example.jubging.Service;
 
 import com.example.jubging.DTO.EditUserInfoDTO;
-import com.example.jubging.DTO.UserInfoDTO;
-import com.example.jubging.Exception.CUserNotFoundException;
-import com.example.jubging.DTO.UserPageDTO;
+import com.example.jubging.DTO.user.UserInfoDTO;
+import com.example.jubging.common.Exception.CUserNotFoundException;
+import com.example.jubging.DTO.user.UserPageDTO;
 import com.example.jubging.Model.User;
 import com.example.jubging.Repository.UserRepository;
-import com.example.jubging.config.security.JwtTokenProvider;
+import com.example.jubging.auth.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Arrays;
 
 @Slf4j
 @Service
@@ -23,6 +25,14 @@ public class UserService {
     private final UserRepository userRepository;
     private final JwtTokenProvider jwtTokenProvider;
     private final PasswordEncoder passwordEncoder;
+
+    public User getUser(HttpServletRequest request){
+        String token = jwtTokenProvider.resolveToken(request);
+        Authentication authentication = jwtTokenProvider.getAuthentication(token);
+        User user = (User) authentication.getPrincipal();
+
+        return user;
+    }
 
     @Transactional
     public boolean checkEmailDuplicate(String userId){
@@ -49,14 +59,12 @@ public class UserService {
         Long userId = jwtTokenProvider.getUserId(request);
 
         String nickname = editUserInfoDTO.getNickname();
-        String phoneNumber = editUserInfoDTO.getPhoneNumber();
         String password = editUserInfoDTO.getPassword();
 
         User user = userRepository.findById(userId)
                 .orElseThrow(CUserNotFoundException::new);
 
         user.setNickname(nickname);
-        user.setPhoneNumber(phoneNumber);
         user.setPassword(passwordEncoder.encode(password));
 
         userRepository.save(user);
@@ -70,5 +78,38 @@ public class UserService {
                 .orElseThrow(CUserNotFoundException::new);
 
         return UserInfoDTO.getUserInfo(user);
+    }
+
+    public String getUserNickname(HttpServletRequest request){
+        User user = this.getUser(request);
+        return user.getNickname();
+    }
+
+    public String getUserId(HttpServletRequest request){
+        User user = this.getUser(request);
+        return user.getUserId();
+    }
+
+    public void addPloggingTime(HttpServletRequest request, String activityTime){
+        User user = this.getUser(request);
+        String[] times = activityTime.split(":");
+        int[] values = Arrays.stream(times)
+                .mapToInt(Integer::parseInt)
+                .toArray();
+        long userActivityTime = user.getPloggingTime()+Long.valueOf(values[0]);
+
+        user.setPloggingTime(userActivityTime);
+        userRepository.save(user);
+    }
+
+    public void addDistance(HttpServletRequest request, double distance){
+        User user = this.getUser(request);
+
+        double sumDistance = user.getDistance() + distance;
+        // 소수점 두자리수 이하 삭제
+        sumDistance = Math.round(sumDistance * 100) / 100.0;
+        log.info("sum Distance => " + sumDistance);
+        user.setDistance(sumDistance);
+        userRepository.save(user);
     }
 }

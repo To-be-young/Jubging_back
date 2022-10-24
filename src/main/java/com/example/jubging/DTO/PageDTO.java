@@ -1,9 +1,12 @@
 package com.example.jubging.DTO;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
+@RequiredArgsConstructor
 public class PageDTO <T> {
     @JsonProperty
     private int totalPage;

@@ -12,14 +12,15 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Getter
-@IdClass(JoinMemberId.class)
-@Table(name = "joinMember")
-public class JoinMember {
+@IdClass(QualificationId.class)
+@Table(name = "qualification")
+public class Qualification {
     @Id
     @ManyToOne(cascade = CascadeType.PERSIST)
-    @JoinColumn(name="CommunityPost_PostId")
+    @JoinColumn(name = "CommunityPost_postId")
     private CommunityPost postId;
 
     @Id
-    private Long userId;
+    @Column(name = "instruction", nullable = false)
+    private String instruction;
 }

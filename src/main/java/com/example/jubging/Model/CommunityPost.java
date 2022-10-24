@@ -26,6 +26,9 @@ public class CommunityPost {
     // 제목
     @Column(name = "title", nullable = false)
     private String title;
+    // 닉네임
+    @Column(name = "nickname",nullable = false)
+    private String nickname;
     // user 테이블 id
     @Column(name ="userId",nullable = false)
     private Long userId;
@@ -35,9 +38,6 @@ public class CommunityPost {
     // 한줄소개
     @Column(name = "content",nullable = false)
     private String content;
-    // 활동조건
-    @Column(name = "qualification",nullable = false)
-    private String qualification;
     // 집결 시간
     @Column(name="gatheringTime",nullable = false)
     private String gatheringTime;
@@ -63,5 +63,7 @@ public class CommunityPost {
     @Column(name = "recruiting",nullable = false)
     private boolean recruiting;
 
-
+    public int countParticipant(){
+        return ++this.participant;
+    }
 }

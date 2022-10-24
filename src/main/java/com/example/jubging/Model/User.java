@@ -36,9 +36,6 @@ public class User implements UserDetails {
     @Column(name = "nickname", nullable = false)
     private String nickname;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
-
     @Column(name = "count")
     @ColumnDefault("0")
     private int count;
@@ -47,10 +44,17 @@ public class User implements UserDetails {
     @ColumnDefault("0.0")
     private double distance;
 
+    @OneToOne(mappedBy = "user")
+    private ImageInfo imageInfo;
+
     @ElementCollection
     @Builder.Default
     @Column(name = "user_roles")
     private List<String> roles = new ArrayList<>();
+
+    @Column(name = "plogging_time")
+    @ColumnDefault("0")
+    private long ploggingTime;
 
     public void updateUserId(String userId) {
         this.userId = userId;
@@ -100,14 +104,9 @@ public class User implements UserDetails {
     }
 
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    public boolean AddDistance(double newDistance) {
-        distance +=newDistance;
-        return true;
-    }
-
-    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     public boolean AddCount() {
         count++;
         return true;
     }
+
 }

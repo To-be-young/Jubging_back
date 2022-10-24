@@ -2,10 +2,8 @@ package com.example.jubging.DTO;
 
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
 public class TokenDTO {
     private String grantType;

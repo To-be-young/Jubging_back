@@ -1,8 +1,8 @@
 package com.example.jubging.Service.response;
 
-import com.example.jubging.Response.CommonResult;
-import com.example.jubging.Response.ListResult;
-import com.example.jubging.Response.SingleResult;
+import com.example.jubging.DTO.Response.CommonResult;
+import com.example.jubging.DTO.Response.ListResult;
+import com.example.jubging.DTO.Response.SingleResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
